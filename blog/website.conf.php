@@ -2,8 +2,7 @@
 
 $config = array();
 
-/* website informations */
-$config['rooturl'] = 'https://example.com/';
+$config['rooturl'] = getenv('REQUEST_SCHEME').'://'. getenv('SERVER_NAME') . ':' . getenv('SERVER_PORT') . '/';
 $config['title'] = 'template';
 $config['long_title'] = 'template.com';
 
@@ -60,10 +59,11 @@ $config['friends'] = array(
 $config['enable_stats'] = false;
 
 /* db */
-$config['db_host'] = 'blogdb';
-$config['db_name'] = 'blog';
-$config['db_user'] = 'user';
-$config['db_password'] = 'password';
+// get creds from environment variables
+$config['db_host'] = 'blogdb'; 
+$config['db_name'] = getenv('MYSQL_DATABASE');
+$config['db_user'] = getenv('MYSQL_USER');
+$config['db_password'] = getenv('MYSQL_PASSWORD');
 
 /* colors */  
 $config['first_accent_color'] = '#212121';

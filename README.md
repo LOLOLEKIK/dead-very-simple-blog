@@ -9,24 +9,32 @@
 
 dead-simple blog template powered by Markdown and PHP
 
+# Why this fork
+
+I needed to redo my blog, but the proposed architecture and certificate management made using this superb framework more complex in my architecture.
+
+I preferred to recreate a "very" simple version of this framework.
+
+The final objective of this fork is to provide ONLY the techno stack that runs the blog.
+
+The changes :
+- Reverse proxy removed
+- Unification of deployment configuration in docker-compose.yml
+- Simplified configuration via environment variables
+- Removal of unnecessary volumes 
+
+TODO:
+- Start directly from an Apache image
+- Check that I haven't left any configurations that are no longer needed 
+
+After deployment, you're free to put it in standalone, behind a reverse proxy, with a certbot or in an existing kube or swarm stack :)
+
 ## Installation
 
-```sh
-apt install git
-git clone
-cd dead-simple-blog
-
-usermod -a -G docker {user}
-# disconnect/reconnect after this command
-```
-
-Change domain name "website.com" in `docker-compose.yaml`, `apache_conf` and `blog/website.conf.php`.
-
-change mysql passwords and usernames in `docker-compose.yaml` and `blog/website.conf.php`.
+After git clone, edit `docker-compose.yml` to change the environment variables and that's it!
 
 ```sh
 cd dead-simple-blog
-docker network create web
 docker-compose up -d
 # Here we go!
 ```
