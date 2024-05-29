@@ -204,6 +204,7 @@ function sanitize_list_of_languages(languages) {
                 return;
             }
             languages = sanitize_list_of_languages(languages);
+            var lang = getCookie("lang");
 
 
             // Définir le cookie sur la langue suivante
@@ -214,6 +215,11 @@ function sanitize_list_of_languages(languages) {
             } else if (languages.length == 1){
                 setCookie('lang', languages[0], 365);
                 setCookie('multilang', false, 365);
+                if(lang == "notSupported")
+                {
+                    location.reload();
+                }
+
             } else {
                 setCookie('lang', false, 365);
                 setCookie('multilang', true, 365);
@@ -251,15 +257,7 @@ function sanitize_list_of_languages(languages) {
        
     }
   
-    if (lang == "notSupported") {
-        // faire un alert qui propose de fermer la textbox ou alors de clear les cookies
-        const userChoice = confirm("The language is not supported. Please check your sitemap configuration and make sure that each article is mapped to a supported language. Then simply delete your cookies and try again. Do you want us to clear your cookies?");
-        if (userChoice) {
-                clearCookies();
-                location.reload();
-                
-            } 
-    }
+
     /* footer */
 
     if(document.body.scrollHeight < window.innerHeight) {
