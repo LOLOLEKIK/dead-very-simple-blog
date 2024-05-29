@@ -28,15 +28,18 @@ include('assets/inc/utils.php');
     <div class="container">
         <div class="markdown-body container">
             <?php
+                // Capture the output of whoami.php
+                ob_start();
+                include('assets/inc/whoami.php');
+                $output = ob_get_clean();
+
+                // Process the captured output with Parsedown if needed
                 include("assets/inc/Parsedown.php");
 
                 $Parsedown = new Parsedown();
-            
-                $mdfile = fread(fopen('assets/inc/whoami.php', "r"), filesize('assets/inc/whoami.php'));
-            
-                $mdfile = $Parsedown->text($mdfile);
-            
-                // replace references to local markdown directory with full path from website root
+                $mdfile = $Parsedown->text($output);
+
+                // Replace references to local markdown directory with full path from website root
                 $pattern = array();
                 $replacement = array();
                 $pattern[0] = '/<code class="/';
@@ -44,7 +47,7 @@ include('assets/inc/utils.php');
                 $replacement[0] = '<code class="prettyprint ';
                 $replacement[1] = '<code class="prettyprint">';
                 $mdfile = preg_replace($pattern, $replacement, $mdfile);
-            
+
                 echo $mdfile;
             ?>
         </div>

@@ -3,24 +3,24 @@
 include('website.conf.php');
 include('assets/inc/utils.php');
 
-
-if(isset($_GET['file']) && $_GET['file'] != '')
-{
+if(isset($_GET['file']) && $_GET['file'] != '') {
     // parse sitemap
     $previousPost = '-1';
     $selectedPost = '-1';
     $followingPost = '-1';
     $sitemap = json_decode(fread(fopen("sitemap.json", "r"), filesize("sitemap.json")));
-    
+
+    // Déterminer la langue du cookie
+    $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN'; // Utilisez 'EN' comme langue par défaut
+
     foreach ($sitemap->posts as $key => $post) {
-	    if(isset($post->hidden) && $post->hidden == true && $_GET["file"] !== $post->url) {
-	        unset($sitemap->posts[$key]);
-	    }
+        if(isset($post->hidden) && $post->hidden == true && $_GET["file"] !== $post->url) {
+            unset($sitemap->posts[$key]);
+        }
     }
-    
+
     foreach ($sitemap->posts as $key => $post) {
-        if($_GET['file'] === $post->url)
-        {
+        if($_GET['file'] === $post->url && isset($post->file->$current_lang)) {
             if(isset($sitemap->posts[$key - 1])) {
                 $previousPost = $sitemap->posts[$key - 1];
             }
@@ -32,45 +32,36 @@ if(isset($_GET['file']) && $_GET['file'] != '')
             }
         }
     }
-    //print_r($selectedPost);
 
-    if($selectedPost != '-1')
-    {
+    if($selectedPost != '-1') {
         // nice
-    }
-    else
-    {
+    } else {
         return_404();
     }
-}
-else
-{
+} else {
     return_404();
 }
 
-
 $og_image = NULL;
 
+/* CHEMIN DU FICHIER EN FONCTION DE LA LANGUE */
+$file_path = $selectedPost->file->$current_lang;
+
 /* CHECK THE FILE EXTENSION */
-if((substr($selectedPost->file, strlen($selectedPost->file) - 3) === 'php') ||
-(substr($selectedPost->file, strlen($selectedPost->file) - 4) === 'html'))
-{
-    $file = fread(fopen($selectedPost->file, "r"), filesize($selectedPost->file));
+if((substr($file_path, strlen($file_path) - 3) === 'php') || (substr($file_path, strlen($file_path) - 4) === 'html')) {
+    $file = fread(fopen($file_path, "r"), filesize($file_path));
 
     $re = '/<img src="(.+?)(?=\")/m';
     preg_match($re, $mdfile, $matches, PREG_OFFSET_CAPTURE, 0);
-    if(isset($matches[1][0]) && $matches[1][0] !== '')
-    {
+    if(isset($matches[1][0]) && $matches[1][0] !== '') {
         $og_image = return_url($matches[1][0]);
     }
-}
-else if((substr($selectedPost->file, strlen($selectedPost->file) - 2) === 'md'))
-{
+} else if((substr($file_path, strlen($file_path) - 2) === 'md')) {
     include("assets/inc/Parsedown.php");
 
     $Parsedown = new Parsedown();
 
-    $mdfile = fread(fopen($selectedPost->file, "r"), filesize($selectedPost->file));
+    $mdfile = fread(fopen($file_path, "r"), filesize($file_path));
 
     $mdfile = $Parsedown->text($mdfile);
 
@@ -90,17 +81,13 @@ else if((substr($selectedPost->file, strlen($selectedPost->file) - 2) === 'md'))
     /* og image search */
     $re = '/<img src="(.+?)(?=\")/m';
     preg_match($re, $mdfile, $matches, PREG_OFFSET_CAPTURE, 0);
-    if(isset($matches[1][0]) && $matches[1][0] !== '')
-    {
+    if(isset($matches[1][0]) && $matches[1][0] !== '') {
         $og_image = $matches[1][0];
     }
-
-    //$pattern = '/<\/summary>((.\n?)+)<\/details>/mg';
 }
 
 /* OG image choice */
-if($og_image === NULL)
-{
+if($og_image === NULL) {
     $og_image = return_url($config['profile_picture']);
 }
 
@@ -112,10 +99,8 @@ if($og_image === NULL)
     <title><?php echo $selectedPost->title ?> | <?php echo $config['title'] ?></title>
     <meta property="og:title" content="<?php echo $selectedPost->title ?>. Tags:<?php
     $i = 0;
-    foreach(get_tag_list($selectedPost->url) as $key => $tag)
-    {
-        if($i == 0)
-        {
+    foreach(get_tag_list($selectedPost->url) as $key => $tag) {
+        if($i == 0) {
             $i += 1;
             echo "{$tag}";
         }
@@ -126,10 +111,8 @@ if($og_image === NULL)
     <meta name="description" content="<?php echo $selectedPost->title ?>">
     <meta name="keywords" content="<?php
     $i = 0;
-    foreach(get_tag_list($selectedPost->url) as $key => $tag)
-    {
-        if($i == 0)
-        {
+    foreach(get_tag_list($selectedPost->url) as $key => $tag) {
+        if($i == 0) {
             $i += 1;
             echo "{$tag}";
         }
@@ -157,8 +140,7 @@ if($og_image === NULL)
     echo '<p class="theme-font-color">title: ' . $selectedPost->title . '<br>';
     echo 'date: ' . date("M d, Y", strtotime($selectedPost->date)) . '<br>';
     echo 'tags: ';
-    foreach (get_tag_list($selectedPost->url) as $key => $tag)
-    {
+    foreach (get_tag_list($selectedPost->url) as $key => $tag) {
         echo '<a href="' . $config['rooturl'] . 'tag/' . $tag . '">' . $tag . '</a> ';
     }
     echo '</p>';
@@ -170,14 +152,9 @@ if($og_image === NULL)
     echo '<div class="markdown-body container">';
 
     /* CHECK THE FILE EXTENSION */
-
-    if((substr($selectedPost->file, strlen($selectedPost->file) - 3) === 'php') ||
-    (substr($selectedPost->file, strlen($selectedPost->file) - 4) === 'html'))
-    {
-        include($selectedPost->file);
-    }
-    else if((substr($selectedPost->file, strlen($selectedPost->file) - 2) === 'md'))
-    {
+    if((substr($file_path, strlen($file_path) - 3) === 'php') || (substr($file_path, strlen($file_path) - 4) === 'html')) {
+        include($file_path);
+    } else if((substr($file_path, strlen($file_path) - 2) === 'md')) {
         echo $mdfile;
     }
 
@@ -189,12 +166,12 @@ if($og_image === NULL)
         <div class="row container" style="margin-bottom: 0;">
             <div class="col s12 m6">
                 <?php
-                    echo $previousPost !== '-1' ? '<a href="' . $config['rooturl'] . 'post/' . $previousPost->url . '" class="breadcrumb"><p><i class="material-icons left">keyboard_arrow_left</i> ' . $previousPost->title . '</p></a>': '';
+                    echo $previousPost !== '-1' ? '<a href="' . $config['rooturl'] . 'post/' . $previousPost->url . '" class="breadcrumb"><p><i class="material-icons left">keyboard_arrow_left</i> ' . $previousPost->title . '</p></a>' : '';
                 ?>
             </div>
             <div class="col s12 m6 right-align">
                 <?php
-                    echo $followingPost !== '-1' ? '<a href="' . $config['rooturl'] . 'post/' . $followingPost->url . '" class="breadcrumb"><p>' . $followingPost->title . ' <i class="material-icons right">keyboard_arrow_right</i></p></a>': '';
+                    echo $followingPost !== '-1' ? '<a href="' . $config['rooturl'] . 'post/' . $followingPost->url . '" class="breadcrumb"><p>' . $followingPost->title . ' <i class="material-icons right">keyboard_arrow_right</i></p></a>' : '';
                 ?>
             </div>
         </div>

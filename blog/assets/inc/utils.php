@@ -13,6 +13,9 @@ function get_post_list($count = -1)
     $i = $count;
     $list = array();
 
+    // Déterminer la langue du cookie
+    $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN'; // Utilisez 'EN' comme langue par défaut
+
     // parse sitemap
     try
     {
@@ -25,7 +28,7 @@ function get_post_list($count = -1)
                 {
                     break;
                 }
-                if(!(isset($post->hidden) && $post->hidden == true))
+                if(!(isset($post->hidden) && $post->hidden == true) && isset($post->file->$current_lang))
                 {
                     array_push($list, $post);
                     $i -= 1;
@@ -49,13 +52,16 @@ function get_tag_list($unique_post = '0')
 {
     $list = array();
 
+    // Déterminer la langue du cookie
+    $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN'; // Utilisez 'EN' comme langue par défaut
+
     // parse sitemap
     $posts = get_post_list();
     if($unique_post !== '0')
     {
         foreach($posts as $key => $post)
         {
-            if($post->url === $unique_post)
+            if($post->url === $unique_post && isset($post->file->$current_lang))
             {
                 foreach($post->tags as $key => $tag)
                 {
@@ -69,11 +75,14 @@ function get_tag_list($unique_post = '0')
     {
         foreach($posts as $key => $post)
         {
-            foreach($post->tags as $key => $tag)
+            if(isset($post->file->$current_lang))
             {
-                if(array_search($tag, $list, true) === false)
+                foreach($post->tags as $key => $tag)
                 {
-                    array_push($list, $tag);
+                    if(array_search($tag, $list, true) === false)
+                    {
+                        array_push($list, $tag);
+                    }
                 }
             }
         }
@@ -82,25 +91,30 @@ function get_tag_list($unique_post = '0')
     return $list;
 }
 
+
 function display_post_summary($post)
 {
     global $config;
-    echo '<a href="' . $config['rooturl'] . 'post/' . $post->url . '"><h5>' . $post->title . '</h5></a>';
-    echo '<p class="theme-font-color"><i class="tiny material-icons">date_range</i> date: ' . date("M d, Y", strtotime($post->date)) . '</p>';
-    echo '<p class="theme-font-color">';
-    foreach($post->tags as $key => $tag)
-    {
-        if($key === 0)
+    $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN'; // Utilisez 'EN' comme langue par défaut
+
+    if (isset($post->file->$current_lang)) {
+        echo '<a href="' . $config['rooturl'] . 'post/' . $post->url . '"><h5>' . $post->title . '</h5></a>';
+        echo '<p class="theme-font-color"><i class="tiny material-icons">date_range</i> date: ' . date("M d, Y", strtotime($post->date)) . '</p>';
+        echo '<p class="theme-font-color">';
+        foreach($post->tags as $key => $tag)
         {
-            echo '<a href="' . $config['rooturl'] . 'tag/' . $tag . '">' . $tag . '</a>';
+            if($key === 0)
+            {
+                echo '<a href="' . $config['rooturl'] . 'tag/' . $tag . '">' . $tag . '</a>';
+            }
+            else
+            {
+                echo ' - ' . '<a href="' . $config['rooturl'] . 'tag/' . $tag . '">' . $tag . '</a>';
+            }
         }
-        else
-        {
-            echo ' - ' . '<a href="' . $config['rooturl'] . 'tag/' . $tag . '">' . $tag . '</a>';
-        }
+        echo '</p>';
+        echo '<br><hr><br>';
     }
-    echo '</p>';
-    echo '<br><hr><br>';
 }
 
 function return_url($link)

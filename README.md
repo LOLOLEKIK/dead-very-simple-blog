@@ -29,6 +29,49 @@ TODO:
 
 After deployment, you're free to put it in standalone, behind a reverse proxy, with a certbot or in an existing kube or swarm stack :)
 
+I've also modified the sitemap.json strcuture to handle multiple languages.
+
+Here are the supported languages 
+
+```
+'EN' => '🇺🇸',  // Anglais (États-Unis)
+'FR' => '🇫🇷',  // Français (France)
+'JA' => '🇯🇵',  // Japonais (Japon)
+'DE' => '🇩🇪',  // Allemand (Allemagne)
+'ES' => '🇪🇸',  // Espagnol (Espagne)
+'IT' => '🇮🇹',  // Italien (Italie)
+'PT' => '🇵🇹',  // Portugais (Portugal)
+'RU' => '🇷🇺',  // Russe (Russie)
+'ZH' => '🇨🇳',  // Chinois (Chine)
+'KO' => '🇰🇷',  // Coréen (Corée du Sud)
+'NL' => '🇳🇱',  // Néerlandais (Pays-Bas)
+'SV' => '🇸🇪',  // Suédois (Suède)
+'DA' => '🇩🇰',  // Danois (Danemark)
+'FI' => '🇫🇮',  // Finnois (Finlande)
+'NO' => '🇳🇴',  // Norvégien (Norvège)
+'PL' => '🇵🇱',  // Polonais (Pologne)
+'TR' => '🇹🇷',  // Turc (Turquie)
+'AR' => '🇸🇦',  // Arabe (Arabie Saoudite)
+'HE' => '🇮🇱',  // Hébreu (Israël)
+'HI' => '🇮🇳',  // Hindi (Inde)
+'TH' => '🇹🇭',  // Thaï (Thaïlande)
+'VI' => '🇻🇳',  // Vietnamien (Vietnam)
+'EL' => '🇬🇷',  // Grec (Grèce)
+'HU' => '🇭🇺',  // Hongrois (Hongrie)
+'CS' => '🇨🇿',  // Tchèque (République Tchèque)
+'SK' => '🇸🇰',  // Slovaque (Slovaquie)
+'RO' => '🇷🇴',  // Roumain (Roumanie)
+'BG' => '🇧🇬',  // Bulgare (Bulgarie)
+'UK' => '🇺🇦',  // Ukrainien (Ukraine)
+'HR' => '🇭🇷',  // Croate (Croatie)
+'SR' => '🇷🇸',  // Serbe (Serbie)
+'LT' => '🇱🇹',  // Lituanien (Lituanie)
+'LV' => '🇱🇻',  // Letton (Lettonie)
+'EE' => '🇪🇪',  // Estonien (Estonie)
+```
+
+If you set the same language, it will not be possible to change it.
+
 ## Installation
 
 After git clone, edit `docker-compose.yml` to change the environment variables and that's it!

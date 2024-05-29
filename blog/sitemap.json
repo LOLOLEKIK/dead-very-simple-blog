@@ -1,11 +1,14 @@
 {
     "posts": [
         {
-            "title": "PHP post",
+            "title": "PHP post only in english",
             "url": "php_example",
             "date": "2021-07-23",
             "dir": "articles/sample/sample_php/",
-            "file": "articles/sample/sample_php/php_test.php",
+            "file":  {
+                "EN": "articles/sample/sample_php/php_test.php"
+                    
+            },
             "tags": [
                 "sample",
                 "php",
@@ -13,14 +16,17 @@
             ]
         },
         {
-            "title": "Second post test",
+            "title": "Second post test only in french",
             "url": "second_sample",
             "date": "2021-04-28",
             "dir": "articles/sample/sample2/",
-            "file": "articles/sample/sample2/second_sample.md",
+            "file": {
+                "FR": "articles/sample/sample2/second_sample.md"
+            },
             "tags": [
                 "sample",
-                "new_tag"
+                "new_tag",
+                "french_tag"
             ]
         },
         {
@@ -28,16 +34,21 @@
             "url": "not_for_use",
             "date": "2021-04-25",
             "dir": "articles/null/",
-            "file": "articles/null.md",
+            "file": {
+                "FR": "articles/null/null.md"
+            },
             "hidden": true,
             "tags": []
         },
         {
-            "title": "sample post title",
+            "title": "sample post title in english and french",
             "url": "sample_post_title",
             "date": "2021-04-20",
             "dir": "articles/sample/sample1/",
-            "file": "articles/sample/sample1/sample_post_title.md",
+            "file": {
+                "FR":  "articles/sample/sample1/sample_post_title_FR.md",
+                "EN":  "articles/sample/sample1/sample_post_title_EN.md"
+            },
             "tags": [
                 "sample",
                 "my_super_tag"

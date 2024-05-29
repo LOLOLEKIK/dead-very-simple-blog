@@ -136,6 +136,93 @@
         
     }
 
+
+    function switch_lang() {
+        fetch('/lang.php')
+        .then(response => response.json())
+        .then(languages => {
+
+            if (languages.error) {
+                console.error(languages.error);
+                return;
+            }
+            languages = sanitize_list_of_languages(languages);
+
+
+            // Obtenir la langue actuelle à partir du cookie
+            let currentLang = getCookie('lang');
+
+            // Trouver l'index de la langue actuelle dans le tableau des langues
+            let currentIndex = languages.indexOf(currentLang);
+
+            // Calculer l'index de la langue suivante
+            let nextIndex = (currentIndex + 1) % languages.length;
+
+            // Définir le cookie sur la langue suivante
+            setCookie('lang', languages[nextIndex], 365);
+            if (languages.length == 0){
+                setCookie('lang', false, 365);
+                setCookie('multilang', false, 365);
+
+
+            } else if (languages.length == 1){
+                setCookie('lang', languages[0], 365);
+                setCookie('multilang', false, 365);
+            }
+            else {
+                setCookie('multilang', true, 365);
+            }
+
+            // Optionnel : recharger la page pour appliquer la nouvelle langue
+            location.reload();
+        })
+        .catch(error => console.error('Error fetching the languages:', error));
+    }
+
+function sanitize_list_of_languages(languages) {
+
+            // array with all country codes
+            possible_country = ['FR', 'EN', 'JA', 'DE', 'ES', 'IT', 'PT', 'RU', 'ZH', 'KO', 'NL', 'SV', 'DA', 'FI', 'NO', 'PL', 'TR', 'AR', 'HE', 'HI', 'TH', 'VI', 'EL', 'HU', 'CS', 'SK', 'RO', 'BG', 'UK', 'HR', 'SR', 'LT', 'LV', 'EE'];
+
+        // Remove unsupported languages
+        for (var i = 0; i < languages.length; i++) {
+            if (!possible_country.includes(languages[i])) {
+                languages.splice(i, 1);
+                i--;
+            }
+        }
+        return languages;
+}
+
+    function get_first_lang() {
+        fetch('/lang.php')
+        .then(response => response.json())
+        .then(languages => {
+
+            if (languages.error) {
+                console.error(languages.error);
+                return;
+            }
+            languages = sanitize_list_of_languages(languages);
+
+
+            // Définir le cookie sur la langue suivante
+            if (languages.length > 1){
+                setCookie('lang', languages[0], 365);
+                setCookie('multilang', true, 365);
+                location.reload();
+            } else if (languages.length == 1){
+                setCookie('lang', languages[0], 365);
+                setCookie('multilang', false, 365);
+            } else {
+                setCookie('lang', false, 365);
+                setCookie('multilang', true, 365);
+            }
+
+        })
+        .catch(error => console.error('Error fetching the languages:', error));
+    }
+
     var dark = getCookie("dark-mode");
     if(dark == "0")
     {
@@ -149,6 +236,30 @@
         dark = 1;
     }
 
+    function clearCookies() {
+            // Clear all cookies
+            document.cookie.split(";").forEach(function(cookie) {
+                const cookieName = cookie.split("=")[0];
+                document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            });
+    }
+
+    var lang = getCookie("lang");
+    var multilang = getCookie("multilang");
+    if (lang == "" || lang == "false" || lang == null || multilang == "false" || multilang == "" || multilang == null) {
+        get_first_lang();
+       
+    }
+  
+    if (lang == "notSupported") {
+        // faire un alert qui propose de fermer la textbox ou alors de clear les cookies
+        const userChoice = confirm("The language is not supported. Please check your sitemap configuration and make sure that each article is mapped to a supported language. Then simply delete your cookies and try again. Do you want us to clear your cookies?");
+        if (userChoice) {
+                clearCookies();
+                location.reload();
+                
+            } 
+    }
     /* footer */
 
     if(document.body.scrollHeight < window.innerHeight) {
