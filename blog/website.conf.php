@@ -2,7 +2,13 @@
 
 $config = array();
 
-$config['rooturl'] = getenv('REQUEST_SCHEME').'://'. getenv('SERVER_NAME') . ':' . getenv('SERVER_PORT') . '/';
+if (getenv('HTTPS') === 'true') {
+    $config['proto'] = 'https';
+
+} else {
+    $config['proto'] = 'http';
+}
+$config['rooturl'] = $config['proto'] .'://'. getenv('NAME_SERVER') .'/';
 $config['title'] = 'template';
 $config['long_title'] = 'template.com';
 

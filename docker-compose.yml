@@ -9,7 +9,8 @@ services:
     ports:
       - "8084:80"
     environment:
-      - SERVER_NAME=example.com
+      - NAME_SERVER=example.com
+      - HTTPS=false
       - MYSQL_DATABASE=blog
       - MYSQL_USER=myuserdb
       - MYSQL_PASSWORD=mypassworddb
