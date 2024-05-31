@@ -14,7 +14,9 @@ Options -Indexes
 
 RewriteEngine on
 RewriteRule ^whoami/?$ about.php
-RewriteRule ^setup/?$ setup.php
+RewriteRule ^admin/setup/?$ admin/setup.php
+RewriteRule ^admin/dashboard/?$ admin/dashboard.php
+RewriteRule ^admin/?$ admin/dashboard.php
 RewriteRule ^licences/?$ licences.php
 RewriteRule ^posts/?$ posts.php?all=1
 RewriteRule ^post/((.)+) post.php?file=$1 [QSA]

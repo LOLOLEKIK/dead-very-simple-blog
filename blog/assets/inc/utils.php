@@ -155,6 +155,12 @@ function display_big_icon($img, $link)
 function log_current_page()
 {
     global $config;
+    // set cookie session to count request
+    if(!isset($_COOKIE['session'])) {
+        $session = uniqid('session_', true);
+        setcookie('session', $session, time() + (10 * 365 * 24 * 60 * 60), '/');
+    }
+    $session = $_COOKIE['session'];
     try{
         $db = new PDO('mysql:host=' . $config['db_host'] . ';dbname=' . $config['db_name'] . ';charset=utf8', $config['db_user'], $config['db_password']);
     }
@@ -191,13 +197,15 @@ function log_current_page()
     {
         $endpoint = NULL;
     }
-
+    $lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN';
     date_default_timezone_set('Europe/Paris');
     $date = date("Y-m-d H:i:s");
-    $req = $db->prepare('INSERT INTO stats(use_date, client_info, endpoint) VALUES(:use_date, :client_info, :endpoint)');
+    $req = $db->prepare('INSERT INTO stats(use_date, client_info, session, lang, endpoint) VALUES(:use_date, :client_info, :session, :lang, :endpoint)');
     $req->execute(array(
         'use_date' => $date,
         'client_info' => $client_info,
+        'session' => $session,
+        'lang' => $lang,
         'endpoint' => $endpoint
     ));
 }

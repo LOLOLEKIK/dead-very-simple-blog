@@ -1,0 +1,17 @@
+.container form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    align-items: center ;
+
+}
+select {
+    display: block;
+    width: fit-content;
+    height: auto;
+    margin-left: 10px;
+    top: -1px;
+    
+}

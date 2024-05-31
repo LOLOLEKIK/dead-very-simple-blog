@@ -3,7 +3,7 @@
 
 if(isset($_GET['go']))
 {
-    include('website.conf.php');
+    include('../website.conf.php');
 
     try{
         $db = new PDO('mysql:host=' . $config['db_host'] . ';dbname=' . $config['db_name'] . ';charset=utf8', $config['db_user'], $config['db_password']);
@@ -16,6 +16,8 @@ if(isset($_GET['go']))
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         use_date DATETIME NULL,
         client_info VARCHAR(200) NULL,
+        session VARCHAR(1000) NULL,
+        lang VARCHAR(5) NULL,
         endpoint VARCHAR(1000) NULL
         ) ENGINE = InnoDB";
 

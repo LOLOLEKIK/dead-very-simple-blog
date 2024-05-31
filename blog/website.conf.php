@@ -61,7 +61,7 @@ $config['friends'] = array(
 );
 
 
-/* to configure the database, run http://website.com/setup */
+/* to configure the database, run http://website.com/admin/setup */
 $config['enable_stats'] = false;
 
 /* db */

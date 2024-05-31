@@ -88,6 +88,14 @@ docker-compose up -d
 
 Everything lies in `website.conf.php` as well as `sitemap.json` files in blog/.
 
+## Stats
+
+To obtain statistics for your site, first activate the feature in `website.conf.php`.
+
+Then go to `/admin/setup` with the user password you set in your docker compose (USERNAME_ADMIN_DASHBOARD/PASSWORD_ADMIN_DASHBOARD).
+
+Then go to `/admin/` or `/admin/dasbhoard` to view your statistics.
+
 #### website.conf.php
 
 In this file, you can setup everything related to the website customization (title, description, header, profile picture, colors...). The variables names are self explanables.

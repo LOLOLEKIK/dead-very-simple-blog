@@ -9,6 +9,7 @@ apt update
 apt install php-mbstring -y
 a2enmod rewrite
 service apache2 restart
+htpasswd -bc /etc/apache2/.htpasswd ${USERNAME_ADMIN_DASHBOARD} ${PASSWORD_ADMIN_DASHBOARD}
 
 # Keep the container running
 tail -f /dev/null
