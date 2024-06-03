@@ -177,6 +177,11 @@ function log_current_page()
     global $config;
     global $lang;
 
+    // check if we are in admin and if we are, don't log
+    if(strpos($_SERVER['REQUEST_URI'], 'admin') !== false)
+    {
+        return;
+    }
     // set cookie session to count request
     if(!isset($_COOKIE['session'])) {
         $session = uniqid('session_', true);
@@ -211,7 +216,6 @@ function log_current_page()
         $endpoint = htmlspecialchars($_SERVER['REQUEST_URI']);
 
         preg_match('/https?:\/\/([a-zA-Z0-9])+(\/(.)+)\//', $config['langurl'], $matches);
-
         $matches[2] = str_replace('/', '\\/', $matches[2]);
         $endpoint = preg_replace('/' . $matches[2] . '/', '', $endpoint);
     }
