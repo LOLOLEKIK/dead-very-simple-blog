@@ -1,5 +1,6 @@
 <?php
 
+include('assets/inc/lang.php');
 include('website.conf.php');
 include('assets/inc/utils.php');
 
@@ -18,7 +19,7 @@ include('assets/inc/utils.php');
         <div class="container">
             <div class="nav-wrapper">
                 <div class="col s12">
-                    <a href="<?php echo $config['rooturl'] ?>" class="breadcrumb"><?php echo $config['long_title'] ?></a>
+                    <a href="<?php echo $config['langurl'] ?>" class="breadcrumb"><?php echo $config['long_title'] ?></a>
                     <a href="" class="breadcrumb">whoami</a>
                 </div>
             </div>

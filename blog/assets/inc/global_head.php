@@ -9,8 +9,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $config['rooturl'] ?>assets/css/materialize.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="apple-touch-icon" href=/"$config['image_description']">
-
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content=<?php echo $lang ?>>
 <meta property="og:site_name" content="<?php echo $config['long_title'] ?>">
 
 <meta name="theme-color" content="<?php echo $config['sub_accent_color'] ?>"/>

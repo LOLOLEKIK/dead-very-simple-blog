@@ -6,22 +6,27 @@ Options -Indexes
     Deny from all
 </FilesMatch>
 
-# disable setup access, to do in production
-#<FilesMatch "^setup.php$">
-#    Order allow,deny
-#    Deny from all
-#</FilesMatch>
-
 RewriteEngine on
-RewriteRule ^whoami/?$ about.php
-RewriteRule ^admin/setup/?$ admin/setup.php
-RewriteRule ^admin/dashboard/?$ admin/dashboard.php
-RewriteRule ^admin/?$ admin/dashboard.php
-RewriteRule ^licences/?$ licences.php
-RewriteRule ^posts/?$ posts.php?all=1
-RewriteRule ^post/((.)+) post.php?file=$1 [QSA]
-RewriteRule ^search/? posts.php [QSA]
-RewriteRule ^tag/((.)+)? posts.php?tag=$1 [QSA]
-RewriteRule ^tag$ posts.php?tag=
+
+# Capture language from URL and set environment variable (any 2-letter code)
+# RewriteRule ^([a-z]{2})/ - [E=LANGUAGE:$1]
+
+# Avoid redirection loop by checking if the language is already present in the URL
+# RewriteCond %{ENV:REDIRECT_STATUS} ^$
+# RewriteCond %{REQUEST_URI} !^/([a-z]{2})/
+# RewriteRule ^(.*)$ /en/$1 [R=302,L]
+
+# Define rules with language parameter
+RewriteRule ^([a-z]{2})/whoami/?$ about.php [QSA]
+RewriteRule ^([a-z]{2})/?$ sitehome.php [QSA]
+RewriteRule ^([a-z]{2})/admin/setup/?$ admin/setup.php [QSA]
+RewriteRule ^([a-z]{2})/admin/dashboard/?$ admin/dashboard.php [QSA]
+RewriteRule ^([a-z]{2})/admin/?$ admin/dashboard.php [QSA]
+RewriteRule ^([a-z]{2})/licences/?$ licences.php [QSA]
+RewriteRule ^([a-z]{2})/posts/?$ posts.php?all=1 [QSA]
+RewriteRule ^([a-z]{2})/post/((.)+)? post.php?file=$2 [QSA]
+RewriteRule ^([a-z]{2})/search/?$ posts.php [QSA]
+RewriteRule ^([a-z]{2})/tag/((.)+)?$ posts.php?tag=$2 [QSA]
+RewriteRule ^([a-z]{2})/tag$ posts.php?tag= [QSA]
 
 ErrorDocument 404 /404.php

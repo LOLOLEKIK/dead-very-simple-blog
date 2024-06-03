@@ -1,5 +1,6 @@
 <?php
 
+include('assets/inc/lang.php');
 include('website.conf.php');
 include('assets/inc/utils.php');
 
@@ -20,7 +21,9 @@ if (isset($_GET['q']) && $_GET['q'] !== '') {
 $q = htmlspecialchars(strip_tags($q));
 
 $final_post_list = array();
-$current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN'; // Utilisez 'EN' comme langue par défaut
+// // $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN';
+$current_lang = $lang  ; // Utilisez 'EN' comme langue par défaut
+
 
 switch ($type) {
     case 'query':
@@ -95,21 +98,21 @@ switch ($type) {
         <div class="container">
             <div class="nav-wrapper">
                 <div class="col s12">
-                    <a href="<?php echo $config['rooturl'] ?>" class="breadcrumb"><?php echo $config['long_title'] ?></a>
+                    <a href="<?php echo $config['langurl'] ?>" class="breadcrumb"><?php echo $config['long_title'] ?></a>
                     <?php
                     switch ($type) {
                         case 'query':
-                            echo '<a href="' . $config['rooturl'] . 'posts/" class="breadcrumb">search</a>';
+                            echo '<a href="' . $config['langurl'] . 'posts/" class="breadcrumb">search</a>';
                             echo '<a href="" class="breadcrumb">' . $q . '</a>';
                             break;
 
                         case 'tag':
-                            echo '<a href="' . $config['rooturl'] . 'tag/" class="breadcrumb">tag</a>';
+                            echo '<a href="' . $config['langurl'] . 'tag/" class="breadcrumb">tag</a>';
                             echo '<a href="" class="breadcrumb">' . $q . '</a>';
                             break;
 
                         case 'all':
-                            echo '<a href="' . $config['rooturl'] . 'posts/" class="breadcrumb">posts</a>';
+                            echo '<a href="' . $config['langurl'] . 'posts/" class="breadcrumb">posts</a>';
                             break;
                     }
                     ?>
@@ -167,7 +170,7 @@ switch ($type) {
                                 <?php
                                 $list = get_tag_list();
                                 foreach ($list as $key => $tag) {
-                                    echo '<h6 class="col s12 m6 l4 xl3 theme-font-color"><a href="' . $config['rooturl'] . 'tag/' . $tag . '">' . $tag . '</a></h6>';
+                                    echo '<h6 class="col s12 m6 l4 xl3 theme-font-color"><a href="' . $config['langurl'] . 'tag/' . $tag . '">' . $tag . '</a></h6>';
                                 }
                                 ?>
                                 </div>

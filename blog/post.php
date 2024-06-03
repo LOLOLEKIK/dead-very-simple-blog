@@ -1,5 +1,6 @@
 <?php
 
+include('assets/inc/lang.php');
 include('website.conf.php');
 include('assets/inc/utils.php');
 
@@ -10,8 +11,8 @@ if(isset($_GET['file']) && $_GET['file'] != '') {
     $followingPost = '-1';
     $sitemap = json_decode(fread(fopen("sitemap.json", "r"), filesize("sitemap.json")));
 
-    // Déterminer la langue du cookie
-    $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN'; // Utilisez 'EN' comme langue par défaut
+    // // $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN';
+    $current_lang = $lang ; // Utilisez 'EN' comme langue par défaut
 
     foreach ($sitemap->posts as $key => $post) {
         if(isset($post->hidden) && $post->hidden == true && $_GET["file"] !== $post->url) {
@@ -126,8 +127,8 @@ if($og_image === NULL) {
         <div class="container">
             <div class="nav-wrapper">
                 <div class="col s12">
-                    <a href="<?php echo $config['rooturl'] ?>" class="breadcrumb"><?php echo $config['long_title'] ?></a>
-                    <a href="<?php echo $config['rooturl'] ?>posts/" class="breadcrumb">post</a>
+                    <a href="<?php echo $config['langurl'] ?>" class="breadcrumb"><?php echo $config['long_title'] ?></a>
+                    <a href="<?php echo $config['langurl'] ?>posts/" class="breadcrumb">post</a>
                     <a href="" class="breadcrumb"><?php echo $selectedPost->title ?></a>
                 </div>
             </div>
@@ -141,7 +142,7 @@ if($og_image === NULL) {
     echo 'date: ' . date("M d, Y", strtotime($selectedPost->date)) . '<br>';
     echo 'tags: ';
     foreach (get_tag_list($selectedPost->url) as $key => $tag) {
-        echo '<a href="' . $config['rooturl'] . 'tag/' . $tag . '">' . $tag . '</a> ';
+        echo '<a href="' . $config['langurl'] . 'tag/' . $tag . '">' . $tag . '</a> ';
     }
     echo '</p>';
     echo '</div>';
@@ -166,12 +167,12 @@ if($og_image === NULL) {
         <div class="row container" style="margin-bottom: 0;">
             <div class="col s12 m6">
                 <?php
-                    echo $previousPost !== '-1' ? '<a href="' . $config['rooturl'] . 'post/' . $previousPost->url . '" class="breadcrumb"><p><i class="material-icons left">keyboard_arrow_left</i> ' . $previousPost->title . '</p></a>' : '';
+                    echo $previousPost !== '-1' ? '<a href="' . $config['langurl'] . 'post/' . $previousPost->url . '" class="breadcrumb"><p><i class="material-icons left">keyboard_arrow_left</i> ' . $previousPost->title . '</p></a>' : '';
                 ?>
             </div>
             <div class="col s12 m6 right-align">
                 <?php
-                    echo $followingPost !== '-1' ? '<a href="' . $config['rooturl'] . 'post/' . $followingPost->url . '" class="breadcrumb"><p>' . $followingPost->title . ' <i class="material-icons right">keyboard_arrow_right</i></p></a>' : '';
+                    echo $followingPost !== '-1' ? '<a href="' . $config['langurl'] . 'post/' . $followingPost->url . '" class="breadcrumb"><p>' . $followingPost->title . ' <i class="material-icons right">keyboard_arrow_right</i></p></a>' : '';
                 ?>
             </div>
         </div>

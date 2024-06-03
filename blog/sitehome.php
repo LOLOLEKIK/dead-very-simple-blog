@@ -1,7 +1,9 @@
 <?php
 
+include('assets/inc/lang.php');
 include('website.conf.php');
 include('assets/inc/utils.php');
+
 
 ?>
 <!DOCTYPE html>
@@ -20,7 +22,7 @@ include('assets/inc/utils.php');
             <div class="col s12 m6 offset-m3">
                 <div style="width: 250px; margin: auto;">
                     <?php
-                        echo '<a href="' . $config['rooturl'] . 'whoami"><img src="' . return_url($config['profile_picture']) . '" alt="' . $config['title'] . '" class="circle responsive-img" style="width: 250px;' .
+                        echo '<a href="' . $config['langurl'] . 'whoami"><img src="' . return_url($config['profile_picture']) . '" alt="' . $config['title'] . '" class="circle responsive-img" style="width: 250px;' .
                         ((isset($config['profile_picture_border']) && $config['profile_picture_border'] == true) ? 'border: solid;' . 
                         ((isset($config['profile_picture_border_color']) && $config['profile_picture_border_color'] != '') ? ' border-color: ' . $config['profile_picture_border_color'] : '') . ''  : '') . '"></a>'
                     ?>
@@ -43,13 +45,14 @@ include('assets/inc/utils.php');
                 <h3 class="theme-font-color">LATEST POSTS</h3>
                 <br>
                 <?php
-                    $list = get_post_list(5);
+
+                    $list = get_post_list(5, $lang);
                     foreach($list as $key => $post)
                     {
                         display_post_summary($post);
                     }
                 ?>
-                <a href="<?php echo $config['rooturl'] ?>posts"><h5>VIEW ALL POSTS</h5></a><br>
+                <a href="<?php echo $config['langurl'] ?>posts"><h5>VIEW ALL POSTS</h5></a><br>
             </div>
             <div class="col s12 l4">
                 <!-- <div class="grey darken-4 z-depth-3" style="padding: 10px; margin-bottom: 20px">
@@ -68,7 +71,7 @@ include('assets/inc/utils.php');
                             $list = get_tag_list();
                             foreach($list as $key => $tag)
                             {
-                                echo '<h6 class="col s12 m6 l12 theme-font-color bolder"><a href="' . $config['rooturl'] . 'tag/' . $tag . '">' . $tag . '</a></h6>';
+                                echo '<h6 class="col s12 m6 l12 theme-font-color bolder"><a href="' . $config['langurl'] . 'tag/' . $tag . '">' . $tag . '</a></h6>';
                             }
 
                         ?>

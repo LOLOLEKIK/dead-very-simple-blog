@@ -12,9 +12,11 @@ function get_post_list($count = -1)
 {
     $i = $count;
     $list = array();
+    global $lang;
 
     // Déterminer la langue du cookie
-    $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN'; // Utilisez 'EN' comme langue par défaut
+    // $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN';
+    $current_lang = $lang  ; // Utilisez 'EN' comme langue par défaut
 
     // parse sitemap
     try
@@ -51,9 +53,12 @@ function get_post_list($count = -1)
 function get_tag_list($unique_post = '0')
 {
     $list = array();
+    global $lang;
+
 
     // Déterminer la langue du cookie
-    $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN'; // Utilisez 'EN' comme langue par défaut
+    // $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN';
+    $current_lang = $lang  ; // Utilisez 'EN' comme langue par défaut
 
     // parse sitemap
     $posts = get_post_list();
@@ -95,21 +100,23 @@ function get_tag_list($unique_post = '0')
 function display_post_summary($post)
 {
     global $config;
-    $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN'; // Utilisez 'EN' comme langue par défaut
+    global $lang;
+    // $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN';
+    $current_lang = $lang  ; // Utilisez 'EN' comme langue par défaut
 
     if (isset($post->file->$current_lang)) {
-        echo '<a href="' . $config['rooturl'] . 'post/' . $post->url . '"><h5>' . $post->title . '</h5></a>';
+        echo '<a href="' . $config['langurl'] . 'post/' . $post->url . '"><h5>' . $post->title . '</h5></a>';
         echo '<p class="theme-font-color"><i class="tiny material-icons">date_range</i> date: ' . date("M d, Y", strtotime($post->date)) . '</p>';
         echo '<p class="theme-font-color">';
         foreach($post->tags as $key => $tag)
         {
             if($key === 0)
             {
-                echo '<a href="' . $config['rooturl'] . 'tag/' . $tag . '">' . $tag . '</a>';
+                echo '<a href="' . $config['langurl'] . 'tag/' . $tag . '">' . $tag . '</a>';
             }
             else
             {
-                echo ' - ' . '<a href="' . $config['rooturl'] . 'tag/' . $tag . '">' . $tag . '</a>';
+                echo ' - ' . '<a href="' . $config['langurl'] . 'tag/' . $tag . '">' . $tag . '</a>';
             }
         }
         echo '</p>';
@@ -127,6 +134,19 @@ function return_url($link)
     else
     {
         return $config['rooturl'] . $link;
+    }
+}
+
+function return_langurl($link)
+{
+    global $config;
+    if(filter_var($link, FILTER_VALIDATE_URL) !== false)
+    {
+        return $link;
+    }
+    else
+    {
+        return $config['langurl'] . $link;
     }
 }
 
@@ -155,6 +175,8 @@ function display_big_icon($img, $link)
 function log_current_page()
 {
     global $config;
+    global $lang;
+
     // set cookie session to count request
     if(!isset($_COOKIE['session'])) {
         $session = uniqid('session_', true);
@@ -188,7 +210,7 @@ function log_current_page()
     {
         $endpoint = htmlspecialchars($_SERVER['REQUEST_URI']);
 
-        preg_match('/https?:\/\/([a-zA-Z0-9])+(\/(.)+)\//', $config['rooturl'], $matches);
+        preg_match('/https?:\/\/([a-zA-Z0-9])+(\/(.)+)\//', $config['langurl'], $matches);
 
         $matches[2] = str_replace('/', '\\/', $matches[2]);
         $endpoint = preg_replace('/' . $matches[2] . '/', '', $endpoint);
@@ -197,7 +219,6 @@ function log_current_page()
     {
         $endpoint = NULL;
     }
-    $lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN';
     date_default_timezone_set('Europe/Paris');
     $date = date("Y-m-d H:i:s");
     $req = $db->prepare('INSERT INTO stats(use_date, client_info, session, lang, endpoint) VALUES(:use_date, :client_info, :session, :lang, :endpoint)');

@@ -1,4 +1,4 @@
-<?php if ($_COOKIE['lang'] === 'EN'): ?>
+<?php if ($lang === 'EN'): ?>
 
 ## ✒ About me.
 
@@ -7,7 +7,7 @@ You can write here a description of yourself, the text is automatically stylized
 <?php endif; ?>
 
 
-<?php if ($_COOKIE['lang'] === 'FR'): ?>
+<?php if ($lang === 'FR'): ?>
 
 ## ✒ Par rapport à moi.
 

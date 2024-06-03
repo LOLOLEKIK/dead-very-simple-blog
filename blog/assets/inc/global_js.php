@@ -137,6 +137,39 @@
     }
 
 
+    var dark = getCookie("dark-mode");
+    if(dark == "0")
+    {
+        dark = 0;
+    }
+    else if (dark == "" || dark == "1") {
+        dark = 1;
+    }
+    else
+    {
+        dark = 1;
+    }
+
+    function clearCookies() {
+            // Clear all cookies
+            document.cookie.split(";").forEach(function(cookie) {
+                const cookieName = cookie.split("=")[0];
+                document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            });
+    }
+
+  
+
+    /* footer */
+
+    if(document.body.scrollHeight < window.innerHeight) {
+        document.body.style.minHeight = "100vh";
+        document.getElementById("page-footer").style.position = "absolute";
+        document.getElementById("page-footer").style.bottom = "0px";
+    }
+
+// manage languages
+
     function switch_lang() {
         fetch('/lang.php')
         .then(response => response.json())
@@ -173,8 +206,22 @@
                 setCookie('multilang', true, 365);
             }
 
-            // Optionnel : recharger la page pour appliquer la nouvelle langue
-            location.reload();
+            // Optionnel : recharger la nouvelle langue en mettant au début de l'url la langue (en lowercase) et en gardant le chemin (mais en supprimant la langue actuelle)
+            // Par exemple, si l'URL actuelle est /en/blog, et que la langue suivante est "fr", la nouvelle URL sera /fr/blog
+            // Si l'URL actuelle est /blog, et que la langue suivante est "fr", la nouvelle URL sera /fr/blog
+            // Si l'URL actuelle est /blog, et que la langue suivante est "en", la nouvelle URL sera /en/blog
+            // Si l'URL actuelle est /en/blog, et que la langue suivante est "en", la nouvelle URL sera /en/blog
+            // Si l'URL actuelle est /fr/search?q=test, et que la langue suivante est "en", la nouvelle URL sera /en/search?q=test
+            // Si l'URL actuelle est /en/search?q=test, et que la langue suivante est "fr", la nouvelle URL sera /fr/search?q=test
+            lowercaseLang = languages[nextIndex].toLowerCase();
+            window.location.replace('/' + lowercaseLang + window.location.pathname.replace(/^\/[a-z]{2}\//, '/') + window.location.search);
+
+
+
+            
+            
+
+            
         })
         .catch(error => console.error('Error fetching the languages:', error));
     }
@@ -229,41 +276,11 @@ function sanitize_list_of_languages(languages) {
         .catch(error => console.error('Error fetching the languages:', error));
     }
 
-    var dark = getCookie("dark-mode");
-    if(dark == "0")
-    {
-        dark = 0;
-    }
-    else if (dark == "" || dark == "1") {
-        dark = 1;
-    }
-    else
-    {
-        dark = 1;
-    }
-
-    function clearCookies() {
-            // Clear all cookies
-            document.cookie.split(";").forEach(function(cookie) {
-                const cookieName = cookie.split("=")[0];
-                document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-            });
-    }
-
     var lang = getCookie("lang");
     var multilang = getCookie("multilang");
     if (lang == "" || lang == "false" || lang == null || multilang == "false" || multilang == "" || multilang == null) {
         get_first_lang();
        
-    }
-  
-
-    /* footer */
-
-    if(document.body.scrollHeight < window.innerHeight) {
-        document.body.style.minHeight = "100vh";
-        document.getElementById("page-footer").style.position = "absolute";
-        document.getElementById("page-footer").style.bottom = "0px";
     }
 
 </script>

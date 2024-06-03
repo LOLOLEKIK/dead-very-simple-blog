@@ -8,7 +8,10 @@ if (getenv('HTTPS') === 'true') {
 } else {
     $config['proto'] = 'http';
 }
+// get land in lowercase from cookie
 $config['rooturl'] = $config['proto'] .'://'. getenv('NAME_SERVER') .'/';
+$config['lang'] = strtolower($lang);
+$config['langurl'] = $config['rooturl'] . $config['lang'] . '/';
 $config['title'] = 'template';
 $config['long_title'] = 'template.com';
 
