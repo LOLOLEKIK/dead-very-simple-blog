@@ -6,6 +6,7 @@ Options -Indexes
     Deny from all
 </FilesMatch>
 
+
 RewriteEngine on
 
 # Capture language from URL and set environment variable (any 2-letter code)
@@ -22,6 +23,7 @@ RewriteRule ^([a-z]{2})/?$ sitehome.php [QSA]
 RewriteRule ^([a-z]{2})/admin/setup/?$ admin/setup.php [QSA]
 RewriteRule ^([a-z]{2})/admin/dashboard/?$ admin/dashboard.php [QSA]
 RewriteRule ^([a-z]{2})/admin/?$ admin/dashboard.php [QSA]
+RewriteRule ^([a-z]{2})/admin/generate-sitemap?$ admin/generate_sitemap.php [QSA]
 RewriteRule ^([a-z]{2})/licences/?$ licences.php [QSA]
 RewriteRule ^([a-z]{2})/posts/?$ posts.php?all=1 [QSA]
 RewriteRule ^([a-z]{2})/post/((.)+)? post.php?file=$2 [QSA]

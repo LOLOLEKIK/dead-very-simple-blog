@@ -28,6 +28,9 @@ include('../assets/inc/utils.php');
     </nav>
 
 <div class="container">
+    <div class="container" style="text-align : center">
+        <a href="<?php echo $config['langurl']?>admin/generate-sitemap" >Generate Sitemap</a>
+    </div>
     <form method="GET" action="">
         <label for="time_scale" class="theme-font-color">Time Scale:</label>
         <select name="time_scale" id="time_scale" onchange="this.form.submit()">
