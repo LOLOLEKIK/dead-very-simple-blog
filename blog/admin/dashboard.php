@@ -89,6 +89,7 @@ function print_stats($time_scale){
      FROM stats 
      GROUP BY period 
      ORDER BY period DESC
+     LIMIT 10
  ");
  $req->execute();
  $stats = $req->fetchAll(PDO::FETCH_ASSOC);
@@ -112,16 +113,16 @@ function print_stats($time_scale){
  const visitsChart = new Chart(ctx, {
      type: "line",
      data: {
-         labels: ' . json_encode($periods) . ',
+         labels: ' . json_encode($periods) . '.reverse(),
          datasets: [{
              label: "Pages Visited",
-             data: ' . json_encode($visits) . ',
+             data: ' . json_encode($visits) . '.reverse(),
              borderColor: "rgba(75, 192, 192, 1)",
              borderWidth: 1
          },
          {
              label: "Unique Visitors",
-             data: ' . json_encode($unique_visitors) . ',
+             data: ' . json_encode($unique_visitors) . '.reverse(),
              borderColor: "rgba(153, 102, 255, 1)",
              borderWidth: 1
          }]
@@ -194,6 +195,7 @@ function print_stats($time_scale){
         FROM stats 
         GROUP BY period 
         ORDER BY period DESC
+        LIMIT 10
     ");
     $req->execute();
     $stats = $req->fetchAll(PDO::FETCH_ASSOC);
