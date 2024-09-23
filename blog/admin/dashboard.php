@@ -89,7 +89,6 @@ function print_stats($time_scale){
      FROM stats 
      GROUP BY period 
      ORDER BY period DESC
-     LIMIT 10
  ");
  $req->execute();
  $stats = $req->fetchAll(PDO::FETCH_ASSOC);
@@ -165,10 +164,11 @@ function print_stats($time_scale){
         ];
     }
 
-    // Sort pages by total visits
+    // Sort pages by total visits and limit to top 10
     uasort($pages, function($a, $b) {
         return $b['total_visits'] - $a['total_visits'];
     });
+    $pages = array_slice($pages, 0, 10); // Limit to top 10 pages
 
     if ($pages) {
         echo '<h2 class="theme-font-color">Pages Visited (' . htmlspecialchars($time_scale) . ')</h2>';
@@ -216,11 +216,13 @@ function print_stats($time_scale){
         $periods[$stat['period']] = $stat['unique_users'];
     }
 
-    // Display unique users per period
+    // Display unique users per period, limited to top 10
     echo '<h2 class="theme-font-color">Unique Users (' . htmlspecialchars($time_scale) . ')</h2>';
     echo '<table>';
     echo '<tr><th class="theme-font-color">Period</th><th class="theme-font-color">Number of Unique Users</th></tr>';
-    foreach (array_reverse($periods) as $period => $unique_users) { // Reverse the order for most recent first
+    
+    $top_periods = array_slice(array_reverse($periods), 0, 10); // Limit to top 10 periods
+    foreach ($top_periods as $period => $unique_users) {
         echo '<tr>';
         echo '<td class="theme-font-color">' . $period . '</td>';
         echo '<td class="theme-font-color">' . $unique_users . '</td>';
@@ -263,8 +265,7 @@ $time_scale = isset($_GET['time_scale']) ? $_GET['time_scale'] : 'month';
     </div>
 </div>
 
-<?php include('../assets/inc/footer.php'); ?>
+<?php include('../assets/inc/footer.php'); ?> 
 <?php include('../assets/inc/global_js.php'); ?>
 </body>
 </html>
-
