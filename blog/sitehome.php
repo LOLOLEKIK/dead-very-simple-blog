@@ -69,6 +69,7 @@ include('assets/inc/utils.php');
                         <?php
 
                             $list = get_tag_list();
+                            sort($list); // Sort tags alphabetically
                             foreach($list as $key => $tag)
                             {
                                 echo '<h6 class="col s12 m6 l12 theme-font-color bolder"><a href="' . $config['langurl'] . 'tag/' . $tag . '">' . $tag . '</a></h6>';
