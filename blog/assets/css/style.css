@@ -115,11 +115,24 @@ nav a:hover{
     padding: 5px 10px;
     background-color: transparent;
     border: none;
-    border-radius: 3px;
     cursor: pointer;
     font-size: 12px;
+    color: inherit;
+    outline: none;
+    transition: font-weight 0.1s ease;
+}
+
+.copy-btn:hover,
+.copy-btn:focus,
+.copy-btn:active {
+    background-color: transparent;
+    outline: none;
+}
+
+.copy-btn:active {
+    font-weight: bold;
 }
 
 pre {
-    position: relative;
+    position: relative;W
 }
