@@ -14,9 +14,8 @@ function get_post_list($count = -1)
     $list = array();
     global $lang;
 
-    // Déterminer la langue du cookie
-    // $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN';
-    $current_lang = $lang  ; // Utilisez 'EN' comme langue par défaut
+
+    $current_lang = $lang  ; 
 
     // parse sitemap
     try
@@ -56,9 +55,8 @@ function get_tag_list($unique_post = '0')
     global $lang;
 
 
-    // Déterminer la langue du cookie
-    // $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN';
-    $current_lang = $lang  ; // Utilisez 'EN' comme langue par défaut
+
+    $current_lang = $lang  ; 
 
     // parse sitemap
     $posts = get_post_list();
@@ -101,8 +99,7 @@ function display_post_summary($post)
 {
     global $config;
     global $lang;
-    // $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN';
-    $current_lang = $lang  ; // Utilisez 'EN' comme langue par défaut
+    $current_lang = $lang  ;
 
     if (isset($post->file->$current_lang)) {
         echo '<a href="' . $config['langurl'] . 'post/' . $post->url . '"><h5>' . $post->title . '</h5></a>';
