@@ -4,6 +4,7 @@
             "title": "PHP post only in english",
             "url": "php_example",
             "date": "2021-07-23",
+            "meta_description": "This is a sample meta description post in English.",
             "dir": "articles/sample/sample_php/",
             "file":  {
                 "EN": "articles/sample/sample_php/php_test.php"
@@ -45,6 +46,7 @@
             "title": "sample post title in english and french",
             "url": "sample_post_title",
             "date": "2021-04-20",
+            "meta_description": "This is a sample meta description post in English and French.",
             "dir": "articles/sample/sample1/",
             "file": {
                 "FR":  "articles/sample/sample1/sample_post_title_FR.md",
