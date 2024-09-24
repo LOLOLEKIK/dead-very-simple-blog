@@ -109,7 +109,9 @@ if($og_image === NULL) {
     }
     ?>">
     <meta property="og:image" content="<?php echo $og_image ?>">
-    <meta name="description" content="<?php echo $selectedPost->title ?>">
+    <?php if (!empty($selectedPost->meta_description)): ?>
+    <meta name="description" content="<?php echo $selectedPost->meta_description ?>">
+    <?php endif; ?>
     <meta name="keywords" content="<?php
     $i = 0;
     foreach(get_tag_list($selectedPost->url) as $key => $tag) {

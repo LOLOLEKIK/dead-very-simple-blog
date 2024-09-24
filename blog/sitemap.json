@@ -19,6 +19,7 @@
             "title": "Second post test only in french",
             "url": "second_sample",
             "date": "2021-04-28",
+            "meta_description": "This is a sample meta description post in French.",
             "dir": "articles/sample/sample2/",
             "file": {
                 "FR": "articles/sample/sample2/second_sample.md"
