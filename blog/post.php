@@ -66,6 +66,11 @@ if((substr($file_path, strlen($file_path) - 3) === 'php') || (substr($file_path,
 
     $mdfile = $Parsedown->text($mdfile);
 
+    // Add copy button to code blocks
+    $pattern = '/<pre><code(.*?)>(.*?)<\/code><\/pre>/s';
+    $replacement = '<pre><code$1><button class="copy-btn" onclick="copyCode(this)">Copy</button>$2</code></pre>';
+    $mdfile = preg_replace($pattern, $replacement, $mdfile);
+
     // replace references to local markdown directory with full path from website root
     $pattern = array();
     $replacement = array();
@@ -109,9 +114,7 @@ if($og_image === NULL) {
     }
     ?>">
     <meta property="og:image" content="<?php echo $og_image ?>">
-    <?php if (!empty($selectedPost->meta_description)): ?>
-    <meta name="description" content="<?php echo $selectedPost->meta_description ?>">
-    <?php endif; ?>
+    <meta name="description" content="<?php echo $selectedPost->title ?>">
     <meta name="keywords" content="<?php
     $i = 0;
     foreach(get_tag_list($selectedPost->url) as $key => $tag) {

@@ -283,4 +283,25 @@ function sanitize_list_of_languages(languages) {
        
     }
 
+    // Add this at the end of the file
+    function copyCode(button) {
+        const pre = button.parentElement;
+        const code = pre.querySelector('code');
+        const range = document.createRange();
+        range.selectNode(code);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        
+        try {
+            document.execCommand('copy');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.textContent = 'Copy';
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+        
+        window.getSelection().removeAllRanges();
+    }
 </script>
