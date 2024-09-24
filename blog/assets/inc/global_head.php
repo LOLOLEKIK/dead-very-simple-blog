@@ -17,7 +17,7 @@
 <meta property="og:image" content="<?php echo return_url($config['profile_picture']) ?>">
 <meta property="og:url" content="<?php echo $config['rooturl'] ?>">
 <!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="<?php echo $config['title'] ?>">
 <meta name="twitter:description" content="<?php echo $config['longer_description'] ?>">
 <meta name="twitter:image" content="<?php echo return_url($config['profile_picture']) ?>">
