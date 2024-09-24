@@ -11,8 +11,8 @@ include('assets/inc/utils.php');
 <head>
     <?php include('assets/inc/global_head.php'); ?>
     <title><?php echo $config['title'] ?></title>
-    <meta property="og:title" content="<?php echo $config['longer_description'] ?>">
-    <meta property="og:image" content="<?php echo return_url($config['profile_picture']) ?>">
+    <meta name="description" content="<?php echo $config['meta_description']; ?>">
+    <meta name="keywords" content="<?php echo $config['keywords']; ?>">
 </head>
 <body>
     <?php include('assets/inc/nav.php') ?>

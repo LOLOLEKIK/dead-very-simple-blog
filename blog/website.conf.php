@@ -19,7 +19,9 @@ $config['long_title'] = 'template.com';
 $config['profile_picture'] = 'assets/img/kappa.png';
 $config['profile_picture_border'] = true;
 $config['profile_picture_border_color'] = '';
-$config['short_description'] = 'short description template';
+/* SEO description for meta tags maximum 160 characters */
+$config['meta_description'] = 'short description template';
+$config['keywords'] = 'keywords, cybersecurity, template';
 $config['longer_description'] = 'longer description template';
 $config['copyright_name'] = 'Ooggle';
 $config['image_description'] = 'assets/img/kappa.png';
