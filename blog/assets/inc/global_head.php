@@ -8,7 +8,7 @@
 <?php echo (isset($_COOKIE['dark-mode']) && $_COOKIE['dark-mode'] == 0) ? '<link rel="stylesheet" href="' . $config['rooturl'] . 'assets/css/github-markdown.css" id="markdown-style">' : '<link rel="stylesheet" href="' . $config['rooturl'] . 'assets/css/github-markdown-dark.css" id="markdown-style">' ?>
 <link rel="stylesheet" type="text/css" href="<?php echo $config['rooturl'] ?>assets/css/materialize.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="apple-touch-icon" href=/"$config['image_description']">
+<link rel="apple-touch-icon" href="<?php echo $config['image_description']; ?>">
 <!-- Open Graph -->
 <meta property="og:locale" content=<?php echo $lang ?>>
 <meta property="og:site_name" content="<?php echo $config['long_title'] ?>">
