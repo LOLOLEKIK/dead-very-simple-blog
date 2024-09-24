@@ -107,6 +107,9 @@ function display_post_summary($post)
     if (isset($post->file->$current_lang)) {
         echo '<a href="' . $config['langurl'] . 'post/' . $post->url . '"><h5>' . $post->title . '</h5></a>';
         echo '<p class="theme-font-color"><i class="tiny material-icons">date_range</i> date: ' . date("M d, Y", strtotime($post->date)) . '</p>';
+        if (!empty($post->meta_description)) {
+            echo '<p class="theme-font-color">' . $post->meta_description . '</p>';
+        }
         echo '<p class="theme-font-color">';
         foreach($post->tags as $key => $tag)
         {
