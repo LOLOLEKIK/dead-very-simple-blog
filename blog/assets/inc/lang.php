@@ -1,5 +1,5 @@
 <?php
-                // Définir les icônes de drapeau en fonction de la langue actuelle
+                // Define the language to flag mapping
                 $lang_to_flag = [
                     'EN' => '🇺🇸',  // Anglais (États-Unis)
                     'FR' => '🇫🇷',  // Français (France)
@@ -53,16 +53,14 @@
                 }
 
                 if (!isset($_COOKIE['lang']) || $_COOKIE['lang'] != $lang) {
-                    setcookie('lang', $lang, time() + (3600 * 24 * 30), '/'); // expire dans 30 jours
-                    // reload page
-                    // header("Location: /$langUrl/" . implode('/', array_slice($path, 1)));
+                    setcookie('lang', $lang, time() + (3600 * 24 * 30), '/'); // expire in 30 days
                 }                
      
 
-                // Vérifier si le cookie 'lang' est défini et contient une langue valide
+                // check if the language is supported
                 $current_lang = isset($_COOKIE['lang']) && array_key_exists($lang, $lang_to_flag) ? $lang : false;
 
-                // Si le cookie 'lang' n'est pas défini ou n'est pas valide, le définir à 'false'
+                // if the language is not supported, set the cookie to "notSupported" and don't display the flag icon
                 if (!$current_lang) {
                     setcookie('lang', "notSupported", null, time() + 365*24*60*60, '/');
                     $flag_icon = false;

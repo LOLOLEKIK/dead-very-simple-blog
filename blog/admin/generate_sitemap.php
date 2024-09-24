@@ -1,5 +1,5 @@
 <?php
-// Charger le contenu du fichier JSON
+// Load the configuration file
 include('../website.conf.php');
 $jsonFile = '../sitemap.json';
 $jsonData = file_get_contents($jsonFile);
@@ -7,23 +7,23 @@ $data = json_decode($jsonData, true);
 
 $baseUrl = rtrim($config['rooturl'], '/') . '/';
 
-// Fonction pour échapper les caractères XML spéciaux
+// Function to escape XML entities
 function escapeXml($string) {
     return htmlspecialchars($string, ENT_QUOTES | ENT_XML1, 'UTF-8');
 }
 
-// Créer une nouvelle instance de DOMDocument
+// Create a new DOMDocument
 $doc = new DOMDocument('1.0', 'UTF-8');
 $doc->formatOutput = true;
 
-// Créer l'élément de base <urlset>
+// Create the <urlset> element
 $urlset = $doc->createElement('urlset');
 $urlset->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 
-// Collecte des tags par langue
+// Collect the tags by language
 $tagsByLang = [];
 
-// Collecter les tags en fonction des langues disponibles dans les fichiers
+// Collect the tags
 foreach ($data['posts'] as $post) {
     if (!$post['hidden']) {
         foreach ($post['tags'] as $tag) {
@@ -40,7 +40,7 @@ foreach ($data['posts'] as $post) {
     }
 }
 
-// Ajouter les URL des tags par langue
+// Ads the URLs for the tags
 foreach ($tagsByLang as $lang => $tags) {
     foreach ($tags as $tag) {
         $urlTag = $doc->createElement('url');
@@ -54,7 +54,7 @@ foreach ($tagsByLang as $lang => $tags) {
     }
 }
 
-// Ajouter les URL des posts
+// Add the URLs for the posts
 foreach ($data['posts'] as $post) {
     if (!$post['hidden']) {
         foreach ($post['file'] as $lang => $file) {
@@ -73,7 +73,7 @@ foreach ($data['posts'] as $post) {
     }
 }
 
-// Ajouter les URLs spécifiques pour chaque langue
+// Add the URLs for the homepage, whoami and tag pages
 foreach ($tagsByLang as $lang => $tags) {
     // URL /whoami
     $urlWhoami = $doc->createElement('url');
@@ -106,10 +106,10 @@ foreach ($tagsByLang as $lang => $tags) {
     $urlset->appendChild($urlLangTag);
 }
 
-// Ajouter <urlset> au document
+// Add the URLs for the homepage
 $doc->appendChild($urlset);
 
-// Enregistrer le fichier XML
+// Save the XML file
 $doc->save('../sitemap.xml');
 
 echo "The sitemap.xml file has been successfully generated.";

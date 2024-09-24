@@ -16,7 +16,7 @@ $config['title'] = 'template';
 $config['long_title'] = 'template.com';
 
 /* picture displayed on the main page */
-$config['profile_picture'] = 'assets/img/kappa.png';
+$config['profile_picture'] = $config['rooturl'].'assets/img/kappa.png';
 $config['profile_picture_border'] = true;
 $config['profile_picture_border_color'] = '';
 /* SEO description for meta tags maximum 160 characters */
@@ -24,7 +24,7 @@ $config['meta_description'] = 'short description template';
 $config['keywords'] = 'keywords, cybersecurity, template';
 $config['longer_description'] = 'longer description template';
 $config['copyright_name'] = 'Ooggle';
-$config['image_description'] = 'assets/img/kappa.png';
+$config['image_description'] = $config['rooturl'].'assets/img/kappa.png';
 
 /* center images in posts */
 $config['center_images'] = false;
@@ -40,15 +40,15 @@ $config['navbar'] = array(
 /* social link list */
 $config['socials'] = array(
 	array(
-        'image' => 'assets/img/icons/twitter.png',
+        'image' => $config['rooturl'].'assets/img/icons/twitter.png',
         'url'   => 'https://twitter.com/'
     ),
     array(
-        'image' => 'assets/img/icons/github.png',
+        'image' => $config['rooturl'].'assets/img/icons/github.png',
         'url'   => 'https://github.com/'
     ),
     array(
-        'image' => 'assets/img/icons/rootme.png',
+        'image' => $config['rooturl'].'assets/img/icons/rootme.png',
         'url'   => 'https://www.root-me.org/'
     )
 );
@@ -56,7 +56,7 @@ $config['socials'] = array(
 /* friend list */
 $config['friends'] = array(
 	array(
-        'image' => 'assets/img/kappa.png',
+        'image' => $config['rooturl'].'assets/img/kappa.png',
         'url'   => 'https://en.wikipedia.org/wiki/Kappa_(folklore)'
     ),
     array(

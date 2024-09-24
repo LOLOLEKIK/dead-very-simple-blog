@@ -11,8 +11,7 @@ if(isset($_GET['file']) && $_GET['file'] != '') {
     $followingPost = '-1';
     $sitemap = json_decode(fread(fopen("sitemap.json", "r"), filesize("sitemap.json")));
 
-    // // $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN';
-    $current_lang = $lang ; // Utilisez 'EN' comme langue par défaut
+    $current_lang = $lang ; 
 
     foreach ($sitemap->posts as $key => $post) {
         if(isset($post->hidden) && $post->hidden == true && $_GET["file"] !== $post->url) {

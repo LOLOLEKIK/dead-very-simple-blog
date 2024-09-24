@@ -21,8 +21,7 @@ if (isset($_GET['q']) && $_GET['q'] !== '') {
 $q = htmlspecialchars(strip_tags($q));
 
 $final_post_list = array();
-// // $current_lang = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'EN';
-$current_lang = $lang  ; // Utilisez 'EN' comme langue par défaut
+$current_lang = $lang  ; 
 
 
 switch ($type) {

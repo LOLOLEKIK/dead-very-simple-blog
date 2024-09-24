@@ -182,16 +182,16 @@
             languages = sanitize_list_of_languages(languages);
 
 
-            // Obtenir la langue actuelle à partir du cookie
+            // Get the current language from the cookie
             let currentLang = getCookie('lang');
 
-            // Trouver l'index de la langue actuelle dans le tableau des langues
+            // Find the index of the current language in the list of languages
             let currentIndex = languages.indexOf(currentLang);
 
-            // Calculer l'index de la langue suivante
+            // Calculate the index of the next language
             let nextIndex = (currentIndex + 1) % languages.length;
 
-            // Définir le cookie sur la langue suivante
+            // Define the next language
             setCookie('lang', languages[nextIndex], 365);
             if (languages.length == 0){
                 setCookie('lang', false, 365);
@@ -206,13 +206,13 @@
                 setCookie('multilang', true, 365);
             }
 
-            // Optionnel : recharger la nouvelle langue en mettant au début de l'url la langue (en lowercase) et en gardant le chemin (mais en supprimant la langue actuelle)
-            // Par exemple, si l'URL actuelle est /en/blog, et que la langue suivante est "fr", la nouvelle URL sera /fr/blog
-            // Si l'URL actuelle est /blog, et que la langue suivante est "fr", la nouvelle URL sera /fr/blog
-            // Si l'URL actuelle est /blog, et que la langue suivante est "en", la nouvelle URL sera /en/blog
-            // Si l'URL actuelle est /en/blog, et que la langue suivante est "en", la nouvelle URL sera /en/blog
-            // Si l'URL actuelle est /fr/search?q=test, et que la langue suivante est "en", la nouvelle URL sera /en/search?q=test
-            // Si l'URL actuelle est /en/search?q=test, et que la langue suivante est "fr", la nouvelle URL sera /fr/search?q=test
+            // Optional: reload the new language by putting the language at the beginning of the url (in lowercase) and keeping the path (but deleting the current language)
+            // For example, if the current URL is /en/blog, and the next language is “fr”, the new URL will be /fr/blog
+            // If the current URL is /blog, and the following language is “fr”, the new URL will be /fr/blog
+            // If the current URL is /blog, and the following language is “en”, the new URL will be /en/blog
+            // If the current URL is /en/blog, and the following language is “en”, the new URL will be /en/blog
+            // If the current URL is /en/search?q=test, and the following language is “en”, the new URL will be /en/search?q=test
+            // If the current URL is /en/search?q=test, and the following language is “fr”, the new URL will be /fr/search?q=test
             lowercaseLang = languages[nextIndex].toLowerCase();
             window.location.replace('/' + lowercaseLang + window.location.pathname.replace(/^\/[a-z]{2}\//, '/') + window.location.search);
 
