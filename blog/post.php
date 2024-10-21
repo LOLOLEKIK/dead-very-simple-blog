@@ -57,7 +57,7 @@ if((substr($file_path, strlen($file_path) - 3) === 'php') || (substr($file_path,
     $file = fread(fopen($file_path, "r"), filesize($file_path));
 
     $re = '/<img src="(.+?)(?=\")/m';
-    preg_match($re, $mdfile, $matches, PREG_OFFSET_CAPTURE, 0);
+    preg_match($re, $file, $matches, PREG_OFFSET_CAPTURE, 0);
     if(isset($matches[1][0]) && $matches[1][0] !== '') {
         $og_image = return_url($matches[1][0]);
     }
@@ -68,25 +68,21 @@ if((substr($file_path, strlen($file_path) - 3) === 'php') || (substr($file_path,
 
     $mdfile = fread(fopen($file_path, "r"), filesize($file_path));
 
+    // Process image paths
+    $mdfile = preg_replace_callback('/!\[([^\]]*)\]\(([^)]+)\)/', function($matches) use ($selectedPost, $config) {
+        $alt = $matches[1];
+        $src = $matches[2];
+        if (!preg_match("~^(?:f|ht)tps?://~i", $src)) {
+            // Construct the full path to the image
+            $src = $config['rooturl'] . $selectedPost->dir . $src;
+        }
+        return "![$alt]($src)";
+    }, $mdfile);
+
     $mdfile = $Parsedown->text($mdfile);
 
     // Add copy button to code blocks
-    $pattern = '/<pre><code(.*?)>(.*?)<\/code><\/pre>/s';
-    $replacement = '<pre><code$1><button class="copy-btn" onclick="copyCode(this)">Copy</button>$2</code></pre>';
-    $mdfile = preg_replace($pattern, $replacement, $mdfile);
-
-    // replace references to local markdown directory with full path from website root
-    $pattern = array();
-    $replacement = array();
-    $pattern[0] = '/<img src="((.)+)"/';
-    $pattern[1] = '/a href="files\/((.)+)">/';
-    $pattern[2] = '/<code class="/';
-    $pattern[3] = '/<code>/';
-    $replacement[0] = 'src="' . $config['rooturl'] . $selectedPost->dir . '$1"';
-    $replacement[1] = 'a href="' . $config['rooturl'] . $selectedPost->dir . 'files/$1">';
-    $replacement[2] = '<code class="prettyprint ';
-    $replacement[3] = '<code class="prettyprint">';
-    $mdfile = preg_replace($pattern, $replacement, $mdfile);
+    $mdfile = preg_replace('/<pre><code(.*?)>(.*?)<\/code><\/pre>/s', '<pre><code$1><button class="copy-btn" onclick="copyCode(this)">Copy</button>$2</code></pre>', $mdfile);
 
     /* og image search */
     $re = '/<img src="(.+?)(?=\")/m';
