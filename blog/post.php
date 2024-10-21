@@ -81,11 +81,11 @@ if((substr($file_path, strlen($file_path) - 3) === 'php') || (substr($file_path,
 
     $mdfile = $Parsedown->text($mdfile);
 
-    // Add prettyprint class to code blocks
-    $mdfile = preg_replace('/<pre><code(.*?)>/', '<pre><code$1 class="prettyprint">', $mdfile);
+    // Add prettyprint class to code blocks while preserving existing classes
+    $mdfile = preg_replace('/<code class="(.*?)"/', '<code class="$1 prettyprint"', $mdfile);
 
     // Add copy button to code blocks
-    $mdfile = preg_replace('/<pre><code(.*?)>(.*?)<\/code><\/pre>/s', '<pre><code$1><button class="copy-btn" onclick="copyCode(this)">Copy</button>$2</code></pre>', $mdfile);
+    $mdfile = preg_replace('/<code(.*?)>(.*?)<\/code>/s', '<code$1><button class="copy-btn" onclick="copyCode(this)">Copy</button>$2</code>', $mdfile);
 
     /* og image search */
     $re = '/<img src="(.+?)(?=\")/m';
