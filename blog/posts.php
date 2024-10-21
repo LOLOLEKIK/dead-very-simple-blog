@@ -45,7 +45,7 @@ switch ($type) {
                 }
             }
 
-            if ($is_ok && isset($post->file->$current_lang)) {
+            if ($is_ok) {
                 array_push($final_post_list, $post);
             }
         }
@@ -54,9 +54,7 @@ switch ($type) {
     case 'all':
         $post_list = get_post_list();
         foreach ($post_list as $key => $post) {
-            if (isset($post->file->$current_lang)) {
-                array_push($final_post_list, $post);
-            }
+            array_push($final_post_list, $post);
         }
         break;
 

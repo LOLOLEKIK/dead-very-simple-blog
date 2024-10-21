@@ -1,3 +1,7 @@
+<?php
+$using_lang_routes = is_object($post->file ?? null);
+?>
+
 <nav id="top-navbar" style="background-color: <?php echo $config['first_accent_color'] ?>" role="navigation" style="position: sticky; top: 0;">
     <div class="nav-wrapper container">
         <a id="logo-container" href="<?php echo $config['langurl'] ?>" class="brand-logo">/<?php echo $config['long_title'] ?></a>
@@ -40,9 +44,9 @@
             ?>
 
 
-            <li><a href="<?php echo $config['langurl'] ?>whoami" class="tooltipped" data-position="bottom" data-tooltip="( ͡° ͜ʖ ͡°)">/whoami</a></li>
+            <li><a href="<?php echo $using_lang_routes ? $config['langurl'] : $config['rooturl'] ?>whoami" class="tooltipped" data-position="bottom" data-tooltip="( ͡° ͜ʖ ͡°)">/whoami</a></li>
             <li><a onclick="switch_dark_white()" class="btn-floating waves-effect waves-light transparent"><i id="theme-switch-button" class="material-icons"><?php echo (isset($_COOKIE['dark-mode']) && $_COOKIE['dark-mode'] == 0) ? 'brightness_3' : 'brightness_7' ?></i></a></li>
-            <?php if ($flag_icon && $_COOKIE['multilang'] === 'true'): ?>
+            <?php if ($using_lang_routes && $flag_icon && $_COOKIE['multilang'] === 'true'): ?>
                 <li><a onclick="switch_lang()" class="btn-floating waves-effect waves-light transparent"><i id="theme-switch-button" class="material-icons"><?php echo $flag_icon; ?></i></a></li>
             <?php endif; ?>
         </ul>
@@ -82,7 +86,7 @@
                     }
                 }
             ?>
-            <li><a class="grey-text text-lighten-5" href="<?php echo $config['langurl'] ?>whoami">/whoami</a></li>
+            <li><a class="grey-text text-lighten-5" href="<?php echo $using_lang_routes ? $config['langurl'] : $config['rooturl'] ?>whoami">/whoami</a></li>
         </ul>
         <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons grey-text text-lighten-">menu</i></a>
     </div>
@@ -92,3 +96,10 @@
         <i class="large material-icons">keyboard_arrow_up</i>
     </a>
 </div>
+
+<ul class="sidenav" id="mobile-demo">
+    <li><a href="<?php echo $using_lang_routes ? $config['langurl'] : $config['rooturl'] ?>whoami">/whoami</a></li>
+    <?php if ($using_lang_routes && $flag_icon && $_COOKIE['multilang'] === 'true'): ?>
+        <li><a onclick="switch_lang()">Switch Language</a></li>
+    <?php endif; ?>
+</ul>

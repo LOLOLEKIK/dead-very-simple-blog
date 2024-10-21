@@ -14,8 +14,7 @@ function get_post_list($count = -1)
     $list = array();
     global $lang;
 
-
-    $current_lang = $lang  ; 
+    $current_lang = $lang;
 
     // parse sitemap
     try
@@ -29,10 +28,18 @@ function get_post_list($count = -1)
                 {
                     break;
                 }
-                if(!(isset($post->hidden) && $post->hidden == true) && isset($post->file->$current_lang))
+                if(!(isset($post->hidden) && $post->hidden == true))
                 {
-                    array_push($list, $post);
-                    $i -= 1;
+                    if(is_object($post->file) && isset($post->file->$current_lang))
+                    {
+                        array_push($list, $post);
+                        $i -= 1;
+                    }
+                    elseif(is_string($post->file))
+                    {
+                        array_push($list, $post);
+                        $i -= 1;
+                    }
                 }
             }
         }
@@ -54,9 +61,7 @@ function get_tag_list($unique_post = '0')
     $list = array();
     global $lang;
 
-
-
-    $current_lang = $lang  ; 
+    $current_lang = $lang;
 
     // parse sitemap
     $posts = get_post_list();
@@ -64,7 +69,7 @@ function get_tag_list($unique_post = '0')
     {
         foreach($posts as $key => $post)
         {
-            if($post->url === $unique_post && isset($post->file->$current_lang))
+            if($post->url === $unique_post)
             {
                 foreach($post->tags as $key => $tag)
                 {
@@ -78,14 +83,11 @@ function get_tag_list($unique_post = '0')
     {
         foreach($posts as $key => $post)
         {
-            if(isset($post->file->$current_lang))
+            foreach($post->tags as $key => $tag)
             {
-                foreach($post->tags as $key => $tag)
+                if(array_search($tag, $list, true) === false)
                 {
-                    if(array_search($tag, $list, true) === false)
-                    {
-                        array_push($list, $tag);
-                    }
+                    array_push($list, $tag);
                 }
             }
         }
@@ -99,29 +101,30 @@ function display_post_summary($post)
 {
     global $config;
     global $lang;
-    $current_lang = $lang  ;
+    $current_lang = $lang;
 
-    if (isset($post->file->$current_lang)) {
-        echo '<a href="' . $config['langurl'] . 'post/' . $post->url . '"><h5>' . $post->title . '</h5></a>';
-        echo '<p class="theme-font-color"><i class="tiny material-icons">date_range</i> date: ' . date("M d, Y", strtotime($post->date)) . '</p>';
-        if (!empty($post->meta_description)) {
-            echo '<p class="theme-font-color">' . $post->meta_description . '</p>';
-        }
-        echo '<p class="theme-font-color">';
-        foreach($post->tags as $key => $tag)
-        {
-            if($key === 0)
-            {
-                echo '<a href="' . $config['langurl'] . 'tag/' . $tag . '">' . $tag . '</a>';
-            }
-            else
-            {
-                echo ' - ' . '<a href="' . $config['langurl'] . 'tag/' . $tag . '">' . $tag . '</a>';
-            }
-        }
-        echo '</p>';
-        echo '<br><hr><br>';
+    $post_url = is_object($post->file) ? $config['langurl'] . 'post/' . $post->url : $config['rooturl'] . 'post/' . $post->url;
+
+    echo '<a href="' . $post_url . '"><h5>' . $post->title . '</h5></a>';
+    echo '<p class="theme-font-color"><i class="tiny material-icons">date_range</i> date: ' . date("M d, Y", strtotime($post->date)) . '</p>';
+    if (!empty($post->meta_description)) {
+        echo '<p class="theme-font-color">' . $post->meta_description . '</p>';
     }
+    echo '<p class="theme-font-color">';
+    foreach($post->tags as $key => $tag)
+    {
+        $tag_url = is_object($post->file) ? $config['langurl'] . 'tag/' . $tag : $config['rooturl'] . 'tag/' . $tag;
+        if($key === 0)
+        {
+            echo '<a href="' . $tag_url . '">' . $tag . '</a>';
+        }
+        else
+        {
+            echo ' - ' . '<a href="' . $tag_url . '">' . $tag . '</a>';
+        }
+    }
+    echo '</p>';
+    echo '<br><hr><br>';
 }
 
 function return_url($link)
@@ -234,3 +237,6 @@ if($config['enable_stats'])
 {
     log_current_page();
 }
+
+
+

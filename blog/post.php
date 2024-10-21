@@ -11,7 +11,7 @@ if(isset($_GET['file']) && $_GET['file'] != '') {
     $followingPost = '-1';
     $sitemap = json_decode(fread(fopen("sitemap.json", "r"), filesize("sitemap.json")));
 
-    $current_lang = $lang ; 
+    $current_lang = $lang;
 
     foreach ($sitemap->posts as $key => $post) {
         if(isset($post->hidden) && $post->hidden == true && $_GET["file"] !== $post->url) {
@@ -20,16 +20,15 @@ if(isset($_GET['file']) && $_GET['file'] != '') {
     }
 
     foreach ($sitemap->posts as $key => $post) {
-        if($_GET['file'] === $post->url && isset($post->file->$current_lang)) {
+        if($_GET['file'] === $post->url) {
             if(isset($sitemap->posts[$key - 1])) {
                 $previousPost = $sitemap->posts[$key - 1];
             }
-
             $selectedPost = $post;
-
             if(isset($sitemap->posts[$key + 1])) {
                 $followingPost = $sitemap->posts[$key + 1];
             }
+            break;
         }
     }
 
@@ -45,7 +44,13 @@ if(isset($_GET['file']) && $_GET['file'] != '') {
 $og_image = NULL;
 
 /* CHEMIN DU FICHIER EN FONCTION DE LA LANGUE */
-$file_path = $selectedPost->file->$current_lang;
+if(is_object($selectedPost->file) && isset($selectedPost->file->$current_lang)) {
+    $file_path = $selectedPost->file->$current_lang;
+} elseif(is_string($selectedPost->file)) {
+    $file_path = $selectedPost->file;
+} else {
+    return_404();
+}
 
 /* CHECK THE FILE EXTENSION */
 if((substr($file_path, strlen($file_path) - 3) === 'php') || (substr($file_path, strlen($file_path) - 4) === 'html')) {
