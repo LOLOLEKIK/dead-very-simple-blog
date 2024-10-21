@@ -9,124 +9,104 @@
 
 dead-simple blog template powered by Markdown and PHP
 
-# Why this fork
+## ✨ Features
 
-I needed to redo my blog, but the proposed architecture and certificate management made using this superb framework more complex in my architecture.
+- Simple and lightweight blog engine
+- Markdown support for writing posts
+- Multi-language support
+- Customizable themes (light/dark mode)
+- SEO-friendly
+- Mobile-responsive design
+- Built-in statistics tracking
+- Easy deployment with Docker
 
-I preferred to recreate a "very" simple version of this framework.
+## 🚀 Quick Start
 
-The final objective of this fork is to provide ONLY the techno stack that runs the blog.
-
-The changes :
-- Reverse proxy removed
-- Unification of deployment configuration in docker-compose.yml
-- Simplified configuration via environment variables
-- Removal of unnecessary volumes 
-
-TODO:
-- Start directly from an Apache image
-- Check that I haven't left any configurations that are no longer needed 
-
-After deployment, you're free to put it in standalone, behind a reverse proxy, with a certbot or in an existing kube or swarm stack :)
-
-I've also modified the sitemap.json strcuture to handle multiple languages.
-
-Here are the supported languages 
-
-```
-'EN' => '🇺🇸',  // Anglais (États-Unis)
-'FR' => '🇫🇷',  // Français (France)
-'JA' => '🇯🇵',  // Japonais (Japon)
-'DE' => '🇩🇪',  // Allemand (Allemagne)
-'ES' => '🇪🇸',  // Espagnol (Espagne)
-'IT' => '🇮🇹',  // Italien (Italie)
-'PT' => '🇵🇹',  // Portugais (Portugal)
-'RU' => '🇷🇺',  // Russe (Russie)
-'ZH' => '🇨🇳',  // Chinois (Chine)
-'KO' => '🇰🇷',  // Coréen (Corée du Sud)
-'NL' => '🇳🇱',  // Néerlandais (Pays-Bas)
-'SV' => '🇸🇪',  // Suédois (Suède)
-'DA' => '🇩🇰',  // Danois (Danemark)
-'FI' => '🇫🇮',  // Finnois (Finlande)
-'NO' => '🇳🇴',  // Norvégien (Norvège)
-'PL' => '🇵🇱',  // Polonais (Pologne)
-'TR' => '🇹🇷',  // Turc (Turquie)
-'AR' => '🇸🇦',  // Arabe (Arabie Saoudite)
-'HE' => '🇮🇱',  // Hébreu (Israël)
-'HI' => '🇮🇳',  // Hindi (Inde)
-'TH' => '🇹🇭',  // Thaï (Thaïlande)
-'VI' => '🇻🇳',  // Vietnamien (Vietnam)
-'EL' => '🇬🇷',  // Grec (Grèce)
-'HU' => '🇭🇺',  // Hongrois (Hongrie)
-'CS' => '🇨🇿',  // Tchèque (République Tchèque)
-'SK' => '🇸🇰',  // Slovaque (Slovaquie)
-'RO' => '🇷🇴',  // Roumain (Roumanie)
-'BG' => '🇧🇬',  // Bulgare (Bulgarie)
-'UK' => '🇺🇦',  // Ukrainien (Ukraine)
-'HR' => '🇭🇷',  // Croate (Croatie)
-'SR' => '🇷🇸',  // Serbe (Serbie)
-'LT' => '🇱🇹',  // Lituanien (Lituanie)
-'LV' => '🇱🇻',  // Letton (Lettonie)
-'EE' => '🇪🇪',  // Estonien (Estonie)
+1. Clone the repository:
+```sh
+git clone https://github.com/Ooggle/dead-simple-blog.git
+cd dead-simple-blog
 ```
 
-If you set the same language, it will not be possible to change it.
+2. Edit `docker-compose.yml` to set your environment variables.
 
-## Installation
+3. Start the blog:
+```sh
+docker-compose up -d
+```
 
-After git clone, edit `docker-compose.yml` to change the environment variables and that's it!
+Your blog is now running!
+
+## ⚙️ Configuration
+
+### 🔧 Main Configuration
+
+Edit `website.conf.php` to customize your blog settings.
+
+### 📚 Content Management
+
+#### 🗺️ sitemap.json
+
+The `sitemap.json` file is where you add and manage your articles. Here's how it works:
+
+- You can add articles that point to either `.md`, `.html`, or `.php` files.
+- The engine will automatically display the articles on the website.
+- To hide an article from the list (but still make it accessible via URL), add `"hidden": true` to the article entry.
+- Articles are not sorted by date, but by their order in the file. The article at the top will be displayed first.
+
+Example structure:
+
+```json
+{
+  "posts": [
+    {
+      "url": "my-first-post",
+      "title": "My First Post",
+      "date": "2023-04-15",
+      "file": "articles/my-first-post.md"
+    },
+    {
+      "url": "hidden-article",
+      "title": "Hidden Article",
+      "date": "2023-04-16",
+      "file": "articles/hidden-article.html",
+      "hidden": true
+    }
+  ]
+}
+```
+
+The sample file in the repository provides examples of different possibilities for creating articles.
+
+1. **📝 Adding Posts**: Add your articles to the `sitemap.json` file.
+
+2. **🏷️ Organizing Content**: Use tags to categorize your posts.
+
+3. **🌐 Multi-language Support**: Set up language-specific content in the `sitemap.json` file.
+
+### 🎨 Customization
+
+1. **🌓 Themes**: The blog supports both light and dark modes. Customize the colors in `website.conf.php`.
+
+2. **📐 Layout**: Modify the templates in the `blog/assets/inc/` directory to change the layout and structure of your blog.
+
+## 📊 Statistics
+
+To enable and view statistics for your site:
+
+1. Set `$config['enable_stats'] = true;` in `website.conf.php`.
+2. Go to `/admin/setup` and enter your admin credentials (set in docker-compose.yml).
+3. Access `/admin/` or `/admin/dashboard` to view your statistics.
+
+## 🔄 Updating
+
+Use the provided update script to keep your blog up-to-date:
 
 ```sh
-cd dead-simple-blog
-docker-compose up -d
-# Here we go!
-```
-
-<br>
-
-## Usage
-
-Everything lies in `website.conf.php` as well as `sitemap.json` files in blog/.
-
-## Stats
-
-To obtain statistics for your site, first activate the feature in `website.conf.php`.
-
-Then go to `/admin/setup` with the user password you set in your docker compose (USERNAME_ADMIN_DASHBOARD/PASSWORD_ADMIN_DASHBOARD).
-
-Then go to `/admin/` or `/admin/dasbhoard` to view your statistics.
-
-#### website.conf.php
-
-In this file, you can setup everything related to the website customization (title, description, header, profile picture, colors...). The variables names are self explanables.
-
-#### sitemap.json
-
-This is where you add your articles. There are example of how to do it in the sample file. Basically, you can add articles which point to etheir `.md` or `.html/.php` file, and the engine will take care of displaying it on the website. Note that you can add `"hidden": true` to an article to hide it from the list (the article can still be accessed via it's URL). The examples shows the different possibilities you have to create perfect articles!
-
-Please be aware that the articles are not sorted by date, but by apparition, meaning the article at the top of the file will be the first to show up.
-
-<br>
-
-## Update guide
-
-#### You can use the update.sh script to update your apache2/src/ directory by doing the following (thanks to [@Kevin-Mizu](https://github.com/Kevin-Mizu)):   
-(don't forget to change the path in your command)   
-```
 wget https://raw.githubusercontent.com/Ooggle/dead-simple-blog/master/update.sh && chmod u+x ./update.sh
 ./update.sh path/to/your/apache2/src/
 ```
 
-### Manual update (not recommanded)
+## 🤝 Contributing
 
-In order to update the website to the latest version, you need to download the latest release, copy the content of the new `src/apache2/src/` in your own `apache2/src/` directory.
-
-:warning: If you don't want all your work to be lost, don't copy:   
-- assets/inc/whoami.php
-- .htaccess   
-- articles/   
-- favicon.png   
-- website.conf.php   
-- sitemap.json   
-
-New options may be needed in your `website.conf.php` file. Check the release changelog in order to update your configuration file consequently (if you are updating from the upstream git, check the commit messages).
+Contributions are welcome! Please feel free to submit a Pull Request.
