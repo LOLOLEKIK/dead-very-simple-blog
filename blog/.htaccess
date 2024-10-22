@@ -18,6 +18,9 @@ RewriteEngine on
 # RewriteRule ^(.*)$ /en/$1 [R=302,L]
 
 # Define rules with language parameter
+RewriteRule admin/setup/?$ admin/setup.php [QSA]
+RewriteRule admin/dashboard/?$ admin/dashboard.php [QSA]
+RewriteRule admin/?$ admin/dashboard.php [QSA]
 RewriteRule ^whoami/?$ about.php [QSA]
 RewriteRule ^/?$ sitehome.php [QSA]
 RewriteRule ^licences/?$ licences.php [QSA]
