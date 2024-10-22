@@ -2,9 +2,9 @@
 $using_lang_routes = is_object($post->file ?? null);
 ?>
 
-<nav id="top-navbar" style="background-color: <?php echo $config['first_accent_color'] ?>" role="navigation" style="position: sticky; top: 0;">
+<nav id="top-navbar" style="background-color: <?php echo $config['first_accent_color'] ?>" role="navigation">
     <div class="nav-wrapper container">
-        <a id="logo-container" href="<?php echo $config['langurl'] ?>" class="brand-logo">/<?php echo $config['long_title'] ?></a>
+        <a id="logo-container" href="<?php echo $config['rooturl'] ?>" class="brand-logo">/<?php echo $config['long_title'] ?></a>
         <ul id="nav-actions-ul" class="right hide-on-med-and-down">
             <li id="search-li-wide" style="height: 64px;">
                 <form action="<?php echo $config['langurl'] ?>search">
@@ -23,7 +23,8 @@ $using_lang_routes = is_object($post->file ?? null);
                     {
                         if(gettype($menu) === 'string')
                         {
-                            echo '<li><a href="' . return_langurl($menu) . '">' . $key . '</a></li>';
+                            $menu_url = return_langurl($menu);
+                            echo '<li><a href="' . $menu_url . '">' . $key . '</a></li>';
                         }
                         else if(gettype($menu) === 'array')
                         {
@@ -33,7 +34,8 @@ $using_lang_routes = is_object($post->file ?? null);
                             {
                                 if(gettype($submenu) === 'string')
                                 {
-                                    echo '<li><a href="' . return_langurl($submenu) . '">' . $subkey . '</a></li>';
+                                    $submenu_url = return_langurl($submenu);
+                                    echo '<li><a href="' . $submenu_url . '">' . $subkey . '</a></li>';
                                 }
                             }
                             echo '</ul>';
@@ -46,7 +48,7 @@ $using_lang_routes = is_object($post->file ?? null);
 
             <li><a href="<?php echo $using_lang_routes ? $config['langurl'] : $config['rooturl'] ?>whoami" class="tooltipped" data-position="bottom" data-tooltip="( ͡° ͜ʖ ͡°)">/whoami</a></li>
             <li><a onclick="switch_dark_white()" class="btn-floating waves-effect waves-light transparent"><i id="theme-switch-button" class="material-icons"><?php echo (isset($_COOKIE['dark-mode']) && $_COOKIE['dark-mode'] == 0) ? 'brightness_3' : 'brightness_7' ?></i></a></li>
-            <?php if ($config['multi_language'] && $flag_icon): ?>
+            <?php if ($config['multi_language'] && $flag_icon && $_COOKIE['multilang'] === 'true'): ?>
                 <li><a onclick="switch_lang()" class="btn-floating waves-effect waves-light transparent"><i id="theme-switch-button" class="material-icons"><?php echo $flag_icon; ?></i></a></li>
             <?php endif; ?>
         </ul>
@@ -99,7 +101,7 @@ $using_lang_routes = is_object($post->file ?? null);
 
 <ul class="sidenav" id="mobile-demo">
     <li><a href="<?php echo $using_lang_routes ? $config['langurl'] : $config['rooturl'] ?>whoami">/whoami</a></li>
-    <?php if ($config['multi_language'] && $flag_icon): ?>
+    <?php if ($config['multi_language'] && $flag_icon && $_COOKIE['multilang'] === 'true'): ?>
         <li><a onclick="switch_lang()">Switch Language</a></li>
     <?php endif; ?>
 </ul>

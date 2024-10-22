@@ -113,14 +113,14 @@ function display_post_summary($post)
     echo '<p class="theme-font-color">';
     foreach($post->tags as $key => $tag)
     {
-        $tag_url = $config['rooturl'] . 'tag/' . $tag;
+        $tag_url = ($config['multi_language'] ? $config['langurl'] : $config['rooturl']) . 'tag/' . urlencode($tag);
         if($key === 0)
         {
-            echo '<a href="' . $tag_url . '">' . $tag . '</a>';
+            echo '<a href="' . $tag_url . '">' . htmlspecialchars($tag) . '</a>';
         }
         else
         {
-            echo ' - ' . '<a href="' . $tag_url . '">' . $tag . '</a>';
+            echo ' - ' . '<a href="' . $tag_url . '">' . htmlspecialchars($tag) . '</a>';
         }
     }
     echo '</p>';

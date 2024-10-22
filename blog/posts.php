@@ -104,8 +104,8 @@ switch ($type) {
                             break;
 
                         case 'tag':
-                            echo '<a href="' . $config['langurl'] . 'tag/" class="breadcrumb">tag</a>';
-                            echo '<a href="" class="breadcrumb">' . $q . '</a>';
+                            echo '<a href="' . ($config['multi_language'] ? $config['langurl'] : $config['rooturl']) . 'tag/" class="breadcrumb">tag</a>';
+                            echo '<a href="" class="breadcrumb">' . htmlspecialchars($q) . '</a>';
                             break;
 
                         case 'all':
@@ -167,7 +167,9 @@ switch ($type) {
                                 <?php
                                 $list = get_tag_list();
                                 foreach ($list as $key => $tag) {
-                                    echo '<h6 class="col s12 m6 l4 xl3 theme-font-color"><a href="' . $config['langurl'] . 'tag/' . $tag . '">' . $tag . '</a></h6>';
+                                    $base_url = $config['multi_language'] ? $config['langurl'] : $config['rooturl'];
+                                    $tag_url = rtrim($base_url, '/') . '/tag/' . urlencode($tag);
+                                    echo '<h6 class="col s12 m6 l12 theme-font-color bolder"><a href="' . $tag_url . '">' . htmlspecialchars($tag) . '</a></h6>';
                                 }
                                 ?>
                                 </div>
