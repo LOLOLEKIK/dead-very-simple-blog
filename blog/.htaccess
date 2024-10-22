@@ -9,28 +9,10 @@ Options -Indexes
 
 RewriteEngine on
 
-# Capture language from URL and set environment variable (any 2-letter code)
-# RewriteRule ^([a-z]{2})/ - [E=LANGUAGE:$1]
+# Check if MULTI_LANGUAGE is set to true
+RewriteCond %{ENV:MULTI_LANGUAGE} =true
 
-# Avoid redirection loop by checking if the language is already present in the URL
-# RewriteCond %{ENV:REDIRECT_STATUS} ^$
-# RewriteCond %{REQUEST_URI} !^/([a-z]{2})/
-# RewriteRule ^(.*)$ /en/$1 [R=302,L]
-
-# Define rules with language parameter
-RewriteRule admin/setup/?$ admin/setup.php [QSA]
-RewriteRule admin/dashboard/?$ admin/dashboard.php [QSA]
-RewriteRule admin/?$ admin/dashboard.php [QSA]
-RewriteRule ^whoami/?$ about.php [QSA]
-RewriteRule ^/?$ sitehome.php [QSA]
-RewriteRule ^licences/?$ licences.php [QSA]
-RewriteRule ^posts/?$ posts.php?all=1 [QSA]
-RewriteRule ^post/((.)+)? post.php?file=$1 [QSA]
-RewriteRule ^search/?$ posts.php [QSA]
-RewriteRule ^tag/((.)+)?$ posts.php?tag=$1 [QSA]
-RewriteRule ^tag$ posts.php?tag= [QSA]
-
-# Language-specific routes
+# If true, use language-specific routes
 RewriteRule ^([a-z]{2})/whoami/?$ about.php [QSA]
 RewriteRule ^([a-z]{2})/?$ sitehome.php [QSA]
 RewriteRule ^([a-z]{2})/licences/?$ licences.php [QSA]
@@ -39,5 +21,16 @@ RewriteRule ^([a-z]{2})/post/((.)+)? post.php?file=$2 [QSA]
 RewriteRule ^([a-z]{2})/search/?$ posts.php [QSA]
 RewriteRule ^([a-z]{2})/tag/((.)+)?$ posts.php?tag=$2 [QSA]
 RewriteRule ^([a-z]{2})/tag$ posts.php?tag= [QSA]
+
+# If false, use non-language-specific routes
+RewriteCond %{ENV:MULTI_LANGUAGE} =false
+RewriteRule ^whoami/?$ about.php [QSA]
+RewriteRule ^/?$ sitehome.php [QSA]
+RewriteRule ^licences/?$ licences.php [QSA]
+RewriteRule ^posts/?$ posts.php?all=1 [QSA]
+RewriteRule ^post/((.)+)? post.php?file=$1 [QSA]
+RewriteRule ^search/?$ posts.php [QSA]
+RewriteRule ^tag/((.)+)?$ posts.php?tag=$1 [QSA]
+RewriteRule ^tag$ posts.php?tag= [QSA]
 
 ErrorDocument 404 /404.php

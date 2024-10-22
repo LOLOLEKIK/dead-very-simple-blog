@@ -46,7 +46,7 @@ $using_lang_routes = is_object($post->file ?? null);
 
             <li><a href="<?php echo $using_lang_routes ? $config['langurl'] : $config['rooturl'] ?>whoami" class="tooltipped" data-position="bottom" data-tooltip="( ͡° ͜ʖ ͡°)">/whoami</a></li>
             <li><a onclick="switch_dark_white()" class="btn-floating waves-effect waves-light transparent"><i id="theme-switch-button" class="material-icons"><?php echo (isset($_COOKIE['dark-mode']) && $_COOKIE['dark-mode'] == 0) ? 'brightness_3' : 'brightness_7' ?></i></a></li>
-            <?php if ($using_lang_routes && $flag_icon && $_COOKIE['multilang'] === 'true'): ?>
+            <?php if ($config['multi_language'] && $flag_icon): ?>
                 <li><a onclick="switch_lang()" class="btn-floating waves-effect waves-light transparent"><i id="theme-switch-button" class="material-icons"><?php echo $flag_icon; ?></i></a></li>
             <?php endif; ?>
         </ul>
@@ -99,7 +99,7 @@ $using_lang_routes = is_object($post->file ?? null);
 
 <ul class="sidenav" id="mobile-demo">
     <li><a href="<?php echo $using_lang_routes ? $config['langurl'] : $config['rooturl'] ?>whoami">/whoami</a></li>
-    <?php if ($using_lang_routes && $flag_icon && $_COOKIE['multilang'] === 'true'): ?>
+    <?php if ($config['multi_language'] && $flag_icon): ?>
         <li><a onclick="switch_lang()">Switch Language</a></li>
     <?php endif; ?>
 </ul>

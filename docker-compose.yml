@@ -10,6 +10,7 @@ services:
     environment:
       - NAME_SERVER=localhost:8084
       - HTTPS=false
+      - MULTI_LANGUAGE=true
       - MYSQL_DATABASE=blog
       - MYSQL_USER=myuserdb
       - MYSQL_PASSWORD=mypassworddb

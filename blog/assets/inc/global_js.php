@@ -171,6 +171,7 @@
 // manage languages
 
     function switch_lang() {
+        <?php if ($config['multi_language']): ?>
         fetch('/lang.php')
         .then(response => response.json())
         .then(languages => {
@@ -224,6 +225,7 @@
             
         })
         .catch(error => console.error('Error fetching the languages:', error));
+        <?php endif; ?>
     }
 
 function sanitize_list_of_languages(languages) {

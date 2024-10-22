@@ -5,6 +5,7 @@ echo "SetEnv MYSQL_USER ${MYSQL_USER}" >> /etc/apache2/apache2.conf
 echo "SetEnv MYSQL_PASSWORD ${MYSQL_PASSWORD}" >> /etc/apache2/apache2.conf
 echo "SetEnv NAME_SERVER ${NAME_SERVER}" >> /etc/apache2/apache2.conf
 echo "SetEnv HTTPS ${HTTPS}" >> /etc/apache2/apache2.conf
+echo "SetEnv MULTI_LANGUAGE ${MULTI_LANGUAGE}" >> /etc/apache2/apache2.conf
 apt update
 apt install php-mbstring -y
 a2enmod rewrite

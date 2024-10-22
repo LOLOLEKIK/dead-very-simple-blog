@@ -36,7 +36,7 @@ include('assets/inc/utils.php');
                         }
                     ?>
                 </div>
-                <!-- <h4 class="center theme-font-color">Bio blablabla blablabla blablabla blablabla blablabla blablabla blablabla</h4> -->
+                <!-- <h4 class="center theme-font-color">Bio blablabla blablabla blablabla blablabla blablabla blablabla</h4> -->
             </div>
         </div>
         <br><br>
@@ -72,7 +72,7 @@ include('assets/inc/utils.php');
                             sort($list); // Sort tags alphabetically
                             foreach($list as $key => $tag)
                             {
-                                echo '<h6 class="col s12 m6 l12 theme-font-color bolder"><a href="' . $config['langurl'] . 'tag/' . $tag . '">' . $tag . '</a></h6>';
+                                echo '<h6 class="col s12 m6 l12 theme-font-color bolder"><a href="' . $config['rooturl'] . 'tag/' . $tag . '">' . $tag . '</a></h6>';
                             }
 
                         ?>

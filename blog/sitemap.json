@@ -6,9 +6,8 @@
             "date": "2021-07-23",
             "meta_description": "This is a sample meta description post in English.",
             "dir": "articles/sample/sample_php/",
-            "file":  {
+            "file": {
                 "EN": "articles/sample/sample_php/php_test.php"
-                    
             },
             "tags": [
                 "sample",
@@ -49,8 +48,8 @@
             "meta_description": "This is a sample meta description post in English and French.",
             "dir": "articles/sample/sample1/",
             "file": {
-                "FR":  "articles/sample/sample1/sample_post_title_FR.md",
-                "EN":  "articles/sample/sample1/sample_post_title_EN.md"
+                "FR": "articles/sample/sample1/sample_post_title_FR.md",
+                "EN": "articles/sample/sample1/sample_post_title_EN.md"
             },
             "tags": [
                 "sample",

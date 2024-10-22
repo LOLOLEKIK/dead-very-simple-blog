@@ -113,7 +113,7 @@ function display_post_summary($post)
     echo '<p class="theme-font-color">';
     foreach($post->tags as $key => $tag)
     {
-        $tag_url = is_object($post->file) ? $config['langurl'] . 'tag/' . $tag : $config['rooturl'] . 'tag/' . $tag;
+        $tag_url = $config['rooturl'] . 'tag/' . $tag;
         if($key === 0)
         {
             echo '<a href="' . $tag_url . '">' . $tag . '</a>';

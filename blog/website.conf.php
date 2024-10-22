@@ -10,8 +10,14 @@ if (getenv('HTTPS') === 'true') {
 }
 // get land in lowercase from cookie
 $config['rooturl'] = $config['proto'] .'://'. getenv('NAME_SERVER') .'/';
-$config['lang'] = strtolower($lang);
-$config['langurl'] = $config['rooturl'] . $config['lang'] . '/';
+$config['multi_language'] = getenv('MULTI_LANGUAGE') === 'true';
+if ($config['multi_language']) {
+    $config['lang'] = strtolower($lang);
+    $config['langurl'] = $config['rooturl'] . $config['lang'] . '/';
+} else {
+    $config['lang'] = '';
+    $config['langurl'] = $config['rooturl'];
+}
 $config['title'] = 'template';
 $config['long_title'] = 'template.com';
 
