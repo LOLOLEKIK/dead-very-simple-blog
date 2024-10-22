@@ -9,6 +9,11 @@ Options -Indexes
 
 RewriteEngine on
 
+# Remove .php extension for admin routes
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^admin/(.*)$ admin/$1.php [L]
+
 # Check if MULTI_LANGUAGE is set to true
 RewriteCond %{ENV:MULTI_LANGUAGE} =true
 
