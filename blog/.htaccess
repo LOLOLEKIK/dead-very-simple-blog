@@ -6,6 +6,10 @@ Options -Indexes
     Deny from all
 </FilesMatch>
 
+<Files generate_sitemap.php>
+    Order Allow,Deny
+    Allow from all
+</Files>
 
 RewriteEngine on
 

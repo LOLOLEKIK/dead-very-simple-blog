@@ -29,7 +29,7 @@ include('../assets/inc/utils.php');
 
 <div class="container">
     <div class="container" style="text-align : center">
-        <a href="<?php echo $config['langurl']?>admin/generate-sitemap" >Generate Sitemap</a>
+        <a href="<?php echo $config['rooturl']?>admin/generate_sitemap" >Generate Sitemap</a>
     </div>
     <form method="GET" action="">
         <label for="time_scale" class="theme-font-color">Time Scale:</label>
