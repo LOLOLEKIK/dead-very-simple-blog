@@ -12,5 +12,9 @@ a2enmod rewrite
 service apache2 restart
 htpasswd -bc /etc/apache2/.htpasswd ${USERNAME_ADMIN_DASHBOARD} ${PASSWORD_ADMIN_DASHBOARD}
 
+# Set correct permissions for the web root
+chown -R www-data:www-data /var/www/html
+chmod -R 755 /var/www/html
+
 # Keep the container running
 tail -f /dev/null
